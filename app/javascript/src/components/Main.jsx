@@ -6,7 +6,7 @@ import { either, isEmpty, isNil } from "ramda";
 
 import { initializeLogger } from "common/logger";
 import { setAuthHeaders, registerIntercepts } from "apis/axios";
-import { PageLoader } from "neetoui";
+import { PageLoader } from "@bigbinary/neetoui";
 import Dashboard from "components/Dashboard";
 
 import PrivateRoute from "components/Common/PrivateRoute";

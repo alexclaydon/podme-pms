@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Input } from "neetoui";
+import { Button, Input } from "@bigbinary/neetoui";
 
 const ResetPassword = () => {
   const [email, setEmail] = useState("");

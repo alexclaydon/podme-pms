@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Button, Input, Checkbox } from "neetoui";
+import { Button, Input, Checkbox } from "@bigbinary/neetoui";
 
 import authenticationApi from "apis/authentication";
 import { useAuthDispatch } from "contexts/auth";

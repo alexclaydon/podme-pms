@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { setAuthHeaders } from "apis/axios";
 import { useAuthDispatch } from "contexts/auth";
 import { useUserDispatch } from "contexts/user";
-import { Button, Input, Toastr, Checkbox } from "neetoui";
+import { Button, Input, Toastr, Checkbox } from "@bigbinary/neetoui";
 import authenticationApi from "apis/authentication";
 
 const Login = ({ history }) => {

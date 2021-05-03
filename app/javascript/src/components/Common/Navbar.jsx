@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { Avatar, Dropdown, Toastr } from "neetoui";
+import { Avatar, Dropdown, Toastr } from "@bigbinary/neetoui";
 import { withRouter } from "react-router-dom";
 import { useAuthDispatch } from "contexts/auth";
 import authenticationApi from "apis/authentication";
