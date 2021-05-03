@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { setAuthHeaders } from "apis/axios";
 import { useAuthDispatch } from "contexts/auth";
 import { useUserDispatch } from "contexts/user";
-import { Button, Input, Toastr } from "neetoui";
+import { Button, Input, Toastr, Checkbox } from "neetoui";
 import authenticationApi from "apis/authentication";
 
 const Login = ({ history }) => {
@@ -34,15 +34,18 @@ const Login = ({ history }) => {
   };
 
   return (
-    <div className="flex flex-row items-center justify-center w-screen h-screen p-6 bg-gray-100">
-      <div className="flex flex-col items-center justify-center w-full h-full mx-auto sm:max-w-md">
-        <h2 className="mb-5 text-3xl font-extrabold text-center text-gray-800">
-          Sign In
-        </h2>
-        <form
-          className="w-full p-8 space-y-6 bg-white border rounded-md shadow"
-          onSubmit={handleSubmit}
-        >
+    <div className="flex flex-row items-start justify-center w-screen h-screen px-6 pt-12 bg-white sm:pt-32">
+      <div className="flex flex-col items-start justify-center w-full mx-auto sm:max-w-md">
+        <h1 className="mb-1 text-3xl font-extrabold text-center text-gray-800">
+          Login to your account
+        </h1>
+        <div className="flex flex-row flex-wrap items-center justify-start space-x-1">
+          <p className="text-sm leading-relaxed text-gray-600">
+            Don&apos;t have an account?
+          </p>
+          <Button style="link" to="/signup" label="Signup here" />
+        </div>
+        <form className="w-full mt-8 space-y-6" onSubmit={handleSubmit}>
           <Input
             id="user_email"
             type="email"
@@ -50,7 +53,6 @@ const Login = ({ history }) => {
             label="Email"
             placeholder="oliver@example.com"
             onChange={e => setEmail(e.target.value)}
-            required
           />
           <Input
             id="user_password"
@@ -60,23 +62,16 @@ const Login = ({ history }) => {
             value={password}
             onChange={e => setPassword(e.target.value)}
           />
-          <Button type="submit" loading={loading} fullWidth label="Login" />
-        </form>
-        <div className="flex flex-col items-center justify-center mt-4 space-y-2">
-          <div className="flex flex-row items-center justify-start space-x-1">
-            <p className="font-normal text-gray-600">Don't have an account?</p>
+          <div className="flex flex-row items-center justify-between">
+            <Checkbox name="remember" label="Remember me" />
             <Button
-              label="Signup"
+              label="Forgot password?"
               style="link"
-              to="/signup"
+              to="/my/password/new"
             />
           </div>
-          <Button
-            label="Forgot password?"
-            style="link"
-            to="/my/password/new"
-          />
-        </div>
+          <Button type="submit" loading={loading} fullWidth label="Login" />
+        </form>
       </div>
     </div>
   );
