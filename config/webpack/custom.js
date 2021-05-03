@@ -1,3 +1,5 @@
+const path = require("path");
+
 module.exports = {
   resolve: {
     alias: {
@@ -6,7 +8,7 @@ module.exports = {
       components: "src/components",
       contexts: "src/contexts",
       reducers: "src/reducers",
-      neetoui: "@bigbinary/neetoui",
+      images: path.resolve(__dirname, "..", "..", "app/assets/images"),
     },
   },
 };

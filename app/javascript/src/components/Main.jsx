@@ -13,6 +13,7 @@ import PrivateRoute from "components/Common/PrivateRoute";
 import PasswordReset from "components/Authentication/ResetPassword";
 import Login from "components/Authentication/Login";
 import Signup from "components/Authentication/Signup";
+import Plans from "components/Authentication/Plans";
 
 import { useAuthState, useAuthDispatch } from "contexts/auth";
 import { useUserDispatch } from "contexts/user";
@@ -45,6 +46,7 @@ const Main = props => {
       <Switch>
         <Route exact path="/my/password/new" component={PasswordReset} />
         <Route exact path="/signup" component={Signup} />
+        <Route exact path="/signup/plans" component={Plans} />
         <Route exact path="/login" component={Login} />
         <PrivateRoute
           path="/"

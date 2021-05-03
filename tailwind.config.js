@@ -4,5 +4,7 @@ module.exports = {
   theme: {
     extend: {}
   },
-  variants: {}
+  variants: {
+    borderRadius: ['first', 'last']
+  }
 };
