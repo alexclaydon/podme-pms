@@ -1,0 +1,31 @@
+.nui-btn {
+  &.nui-btn--primary {
+    background: theme("colors.indigo.600") !important;
+    &:hover:not(:disabled),
+    &:active,
+    &:focus {
+      background-color: theme("colors.indigo.600") !important;
+    }
+
+    &:active,
+    &:focus {
+      border: thin solid theme("colors.indigo.600") !important;
+    }
+  }
+
+  &.nui-btn--text {
+    &:active,
+    &:focus {
+      color: theme("colors.indigo.600") !important;
+    }
+  }
+
+  &.nui-btn--link {
+    color: theme("colors.indigo.600") !important;
+    &:hover:not(:disabled),
+    &:active,
+    &:focus {
+      color: theme("colors.indigo.800") !important;
+    }
+  }
+}

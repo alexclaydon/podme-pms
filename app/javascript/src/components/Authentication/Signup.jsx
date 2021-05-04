@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Button, Input } from "neetoui";
+import { Button, Input, Checkbox } from "@bigbinary/neetoui";
 
 import authenticationApi from "apis/authentication";
 import { useAuthDispatch } from "contexts/auth";
@@ -46,25 +46,18 @@ const Signup = ({ history }) => {
   };
 
   return (
-    <div className="flex flex-row items-center justify-center w-screen h-screen p-6 bg-gray-100">
-      <div className="flex flex-col items-center justify-center w-full h-full mx-auto sm:max-w-md">
-        <h2 className="mb-5 text-3xl font-extrabold text-center text-gray-800">
-          Signup
-        </h2>
-
-        <form
-          className="w-full p-8 space-y-6 bg-white border rounded-md shadow"
-          onSubmit={handleSubmit}
-        >
-          <Input
-            id="user_email"
-            type="email"
-            label="Email"
-            placeholder="oliver@example.com"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            required
-          />
+    <div className="flex flex-row items-start justify-center w-screen h-screen px-6 pt-12 bg-white sm:pt-32">
+      <div className="flex flex-col items-start justify-center w-full mx-auto sm:max-w-md">
+        <h1 className="mb-1 text-3xl font-extrabold text-center text-gray-800">
+          Create your account
+        </h1>
+        <div className="flex flex-row flex-wrap items-center justify-start space-x-1">
+          <p className="text-sm leading-relaxed text-gray-600">
+            Already have an account?
+          </p>
+          <Button style="link" to="/login" label="Sign in here" />
+        </div>
+        <form className="w-full mt-8 space-y-6" onSubmit={handleSubmit}>
           <Input
             id="user_first_name"
             type="text"
@@ -72,7 +65,6 @@ const Signup = ({ history }) => {
             placeholder="Sam"
             value={firstName}
             onChange={e => setFirstName(e.target.value)}
-            required
           />
           <Input
             id="user_last_name"
@@ -81,6 +73,14 @@ const Signup = ({ history }) => {
             label="Last name"
             value={lastName}
             onChange={e => setLastName(e.target.value)}
+          />
+          <Input
+            id="user_email"
+            type="email"
+            label="Email"
+            placeholder="oliver@example.com"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
             required
           />
           <Input
@@ -101,16 +101,22 @@ const Signup = ({ history }) => {
             onChange={e => setPasswordConfirmation(e.target.value)}
             required
           />
+          <div className="flex flex-row items-center justify-center space-x-3">
+            <Checkbox name="terms" />
+            <p>
+              I agree to the{" "}
+              <a href="#!" className="text-indigo-600 hover:text-indigo-700">
+                Terms of Use
+              </a>{" "}
+              and{" "}
+              <a href="#!" className="text-indigo-600 hover:text-indigo-700">
+                Privacy Policy
+              </a>
+              .
+            </p>
+          </div>
           <Button type="submit" loading={loading} label="Signup" fullWidth />
         </form>
-        <div className="flex flex-row items-center justify-start mt-4 space-x-1">
-          <p className="font-normal text-gray-600">Already have an account?</p>
-          <Button
-            label="Login"
-            style="link"
-            to="/login"
-          />
-        </div>
       </div>
     </div>
   );

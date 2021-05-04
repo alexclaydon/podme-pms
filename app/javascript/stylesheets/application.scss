@@ -4,16 +4,8 @@
 
 @import "react-toastify/dist/ReactToastify.min.css";
 
-@import "variables.scss";
-@import "./layouts/sidebar.scss";
+@import "variables";
 
-.content-main {
-  min-height: 100vh !important;
-  width: 100%;
-  background: #FFF;
-  max-height: 100vh;
-  overflow-y: auto;
-  z-index: 2;
-  display: flex;
-  flex-flow: column;
-}
+//Components
+
+@import "./components/buttons";
