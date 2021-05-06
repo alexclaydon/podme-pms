@@ -1,0 +1,26 @@
+.pms-contacts__wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+
+  table {
+    thead {
+      display: table;
+      width: 100%;
+      table-layout: fixed;
+    }
+
+    tbody {
+      display: block;
+      max-height: calc(100vh - 364px);
+      overflow: auto;
+
+      tr {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+      }
+    }
+  }
+}

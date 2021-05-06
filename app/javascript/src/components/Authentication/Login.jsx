@@ -36,7 +36,7 @@ const Login = ({ history }) => {
   return (
     <div className="flex flex-row items-start justify-center w-screen h-screen px-6 pt-12 bg-white sm:pt-32">
       <div className="flex flex-col items-start justify-center w-full mx-auto sm:max-w-md">
-        <h1 className="mb-1 text-3xl font-extrabold text-center text-gray-800">
+        <h1 className="mb-1 text-3xl font-extrabold text-gray-800">
           Login to your account
         </h1>
         <div className="flex flex-row flex-wrap items-center justify-start space-x-1">

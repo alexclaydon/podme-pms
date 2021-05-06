@@ -1,12 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { Avatar, Dropdown, Toastr } from "@bigbinary/neetoui";
+import { Avatar, Dropdown, Toastr, Button } from "@bigbinary/neetoui";
 import { withRouter } from "react-router-dom";
+import { BrowserView, MobileView, isBrowser } from "react-device-detect";
 import { useAuthDispatch } from "contexts/auth";
 import authenticationApi from "apis/authentication";
 import { resetAuthTokens } from "apis/axios";
 
+const Tabs = () => {
+  const navlinkClasses =
+    "px-3 py-2 text-sm font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white hover:no-underline transition-all duration-300 ease-in-out space-x-2 inline-flex flex-row justify-start items-center";
+
+  return (
+    <>
+      <NavLink
+        to="/contacts"
+        activeClassName="bg-gray-800"
+        className={navlinkClasses}
+      >
+        <i className="text-gray-200 ri-user-star-fill"></i>
+        <span>Contacts</span>
+      </NavLink>
+      <NavLink
+        to="/room"
+        activeClassName="bg-gray-800"
+        className={navlinkClasses}
+      >
+        <i className="text-gray-200 ri-door-open-fill"></i>
+        <span>Room</span>
+      </NavLink>
+      <NavLink
+        to="/account"
+        activeClassName="bg-gray-800"
+        className={navlinkClasses}
+      >
+        <i className="text-gray-200 ri-settings-3-fill"></i>
+        <span>Account</span>
+      </NavLink>
+    </>
+  );
+};
 const NavBar = () => {
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
   const authDispatch = useAuthDispatch();
 
   const handleLogout = async () => {
@@ -20,14 +55,19 @@ const NavBar = () => {
     }
   };
 
-  const navlinkClasses =
-    "px-3 py-2 text-sm font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white hover:no-underline transition-all duration-300 ease-in-out";
-
   return (
-    <nav className="w-full bg-gray-900">
-      <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+    <nav className="sticky top-0 left-0 z-10 w-full bg-gray-900 sm:static">
+      <div className="container px-4 mx-auto">
         <div className="grid h-16 grid-cols-3 gap-2">
-          <div className="flex items-center flex-shrink-0">
+          <MobileView viewClassName="flex flex-row justify-start items-center">
+            <Button
+              style="icon"
+              icon={showMobileMenu ? "ri-close-line" : "ri-menu-line"}
+              className="text-2xl"
+              onClick={() => setShowMobileMenu(!showMobileMenu)}
+            />
+          </MobileView>
+          <div className="flex flex-row items-center justify-center flex-shrink-0 sm:justify-start">
             <svg
               width="32"
               height="32"
@@ -45,42 +85,25 @@ const NavBar = () => {
               />
             </svg>
           </div>
-          <div className="flex flex-row items-center justify-center">
-            <div className="hidden space-x-4 sm:block">
-              <NavLink
-                to="/clients"
-                activeClassName="bg-gray-800"
-                className={navlinkClasses}
-              >
-                Clients
-              </NavLink>
-              <NavLink
-                to="/room"
-                activeClassName="bg-gray-800"
-                className={navlinkClasses}
-              >
-                Room
-              </NavLink>
-              <NavLink
-                to="/account"
-                activeClassName="bg-gray-800"
-                className={navlinkClasses}
-              >
-                Account
-              </NavLink>
-            </div>
-          </div>
+          <BrowserView viewClassName="flex flex-row items-center justify-center">
+            <Tabs />
+          </BrowserView>
           <div className="flex flex-row items-center justify-end">
             <Dropdown
               customTarget={() => (
-                <div className="flex-row items-center justify-end hidden sm:flex">
-                  <p className="mr-3 text-sm font-medium text-gray-50">
-                    Martha Lynn
-                  </p>
-                  <Avatar size={32} contact={{ name: "Martha Lynn" }} />
-                  <i className="ml-1 text-gray-400 ri-arrow-down-s-line"></i>
+                <div className="flex flex-row items-center justify-end cursor-pointer">
+                  {isBrowser && (
+                    <p className="mr-3 text-sm font-medium text-gray-50">
+                      Emma Stone
+                    </p>
+                  )}
+                  <Avatar size={32} contact={{ name: "Emma Stone" }} />
+                  {isBrowser && (
+                    <i className="ml-1 text-gray-400 ri-arrow-down-s-line"></i>
+                  )}
                 </div>
               )}
+              position="bottom-right"
             >
               <li>Profile Settings</li>
               <li
@@ -90,49 +113,17 @@ const NavBar = () => {
                 Logout
               </li>
             </Dropdown>
-            <div className="flex -mr-2 sm:hidden">
-              <button
-                type="button"
-                className="inline-flex items-center justify-center p-2 text-gray-400 rounded-md hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
-                aria-controls="mobile-menu"
-                aria-expanded="false"
-              >
-                <span className="sr-only">Open main menu</span>
-                <svg
-                  className="block w-6 h-6"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                </svg>
-                <svg
-                  className="hidden w-6 h-6"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-            </div>
           </div>
         </div>
       </div>
+      {showMobileMenu && (
+        <div
+          className="flex flex-row items-center justify-center px-2 pt-2 pb-3 space-x-2"
+          id="mobile-menu"
+        >
+          <Tabs />
+        </div>
+      )}
     </nav>
   );
 };

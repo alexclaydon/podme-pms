@@ -1,0 +1,26 @@
+.bp3-drawer.nui-pane__wrapper {
+  min-width: calc(min(100vw, 30rem)) !important;
+  max-width: calc(min(100vw, 35rem)) !important;
+
+  .bp3-drawer-header {
+    .bp3-heading {
+      font-weight: theme("fontWeight.bold");
+      color: theme("colors.gray.800");
+    }
+
+    svg {
+      width: 24px;
+      height: 24px;
+    }
+  }
+}
+
+.Toastify__toast-container {
+  min-width: calc(min(90vw, 25rem)) !important;
+  max-width: calc(min(90vw, 25rem)) !important;
+
+  @media only screen and (max-width: 600px) {
+    right: 0;
+    margin: auto;
+  }
+}

@@ -2,9 +2,15 @@ module.exports = {
   important: true,
   purge: false,
   theme: {
-    extend: {}
+    extend: {
+      screens: {
+        'sm': '768px',
+        'md': '991px',
+      }
+    }
   },
   variants: {
-    borderRadius: ['first', 'last']
+    borderRadius: ['first', 'last'],
+    borderWidth: ['first', 'last']
   }
 };
