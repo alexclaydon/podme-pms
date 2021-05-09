@@ -20,7 +20,7 @@ const Contacts = () => {
 
   return (
     <>
-      <div className="container w-full px-4 py-6 mx-auto sm:py-8 sm:px-6">
+      <div className="container w-full px-4 py-6 mx-auto sm:py-8">
         <div className="flex flex-col items-stretch justify-start">
           <div className="flex flex-row items-center justify-between mb-2">
             <div className="flex flex-col items-start justify-start">

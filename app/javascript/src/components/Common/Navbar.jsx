@@ -56,7 +56,7 @@ const NavBar = () => {
   };
 
   return (
-    <nav className="sticky top-0 left-0 z-10 w-full bg-gray-900 sm:static">
+    <nav className="sticky top-0 left-0 z-10 w-full bg-gray-900 xl:static">
       <div className="container px-4 mx-auto">
         <div className="grid h-16 grid-cols-3 gap-2">
           <MobileView viewClassName="flex flex-row justify-start items-center">
@@ -67,7 +67,7 @@ const NavBar = () => {
               onClick={() => setShowMobileMenu(!showMobileMenu)}
             />
           </MobileView>
-          <div className="flex flex-row items-center justify-center flex-shrink-0 sm:justify-start">
+          <div className="flex flex-row items-center justify-center flex-shrink-0 xl:justify-start">
             <svg
               width="32"
               height="32"
@@ -85,7 +85,7 @@ const NavBar = () => {
               />
             </svg>
           </div>
-          <BrowserView viewClassName="flex flex-row items-center justify-center">
+          <BrowserView viewClassName="flex flex-row items-center justify-center space-x-2">
             <Tabs />
           </BrowserView>
           <div className="flex flex-row items-center justify-end">
