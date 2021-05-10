@@ -1,0 +1,28 @@
+@media only screen and (min-width: 768px) {
+  .pms-team-management__wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+
+    table {
+      thead {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+      }
+
+      tbody {
+        display: block;
+        max-height: calc(100vh - 372px);
+        overflow: auto;
+
+        tr {
+          display: table;
+          width: 100%;
+          table-layout: fixed;
+        }
+      }
+    }
+  }
+}

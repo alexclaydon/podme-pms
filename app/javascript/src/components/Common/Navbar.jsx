@@ -30,7 +30,7 @@ const Tabs = () => {
         <span>Room</span>
       </NavLink>
       <NavLink
-        to="/account"
+        to="/settings"
         activeClassName="bg-gray-800"
         className={navlinkClasses}
       >
