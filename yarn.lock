@@ -932,10 +932,10 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
-"@bigbinary/neetoui@^1.0.36":
-  version "1.0.36"
-  resolved "https://registry.yarnpkg.com/@bigbinary/neetoui/-/neetoui-1.0.36.tgz#bb3d2e0ca1d690ea8a074c0a87b4d638e8103122"
-  integrity sha512-YN65vehbK2RrmDOFZ/iJ6QCYZsWrpovM1EHpGSpxx8JRTXkUwXgyYp0LkGHGXCLy45kLdwnkEWINrILwQxzqnQ==
+"@bigbinary/neetoui@^1.0.37":
+  version "1.0.37"
+  resolved "https://registry.yarnpkg.com/@bigbinary/neetoui/-/neetoui-1.0.37.tgz#98b33576a9dfd108f578164a7d10d036891d33f4"
+  integrity sha512-tricr5GIxSPLiEXBIqsPUKdiYzKcPwaBypz537Ru57PI6Neiz1gQAvG//XnCsDEGIrwZYwTviVGGXyS++huo4w==
   dependencies:
     "@reach/auto-id" "^0.15.0"
     "@tailwindcss/forms" "^0.3.2"

@@ -24,7 +24,7 @@ let Room = props => {
             <div>
               {!isTabletLandscapeOrUpper && (
                 <Dropdown
-                  label="Control"
+                  label="Guests"
                   buttonStyle="secondary"
                   buttonProps={{
                     icon: null,

@@ -56,6 +56,7 @@ const Settings = () => {
                 options={TABS}
                 value={TABS.filter(tab => tab.value === currentTab)}
                 onChange={selected => setCurrentTab(selected.value)}
+                isSearchable={false}
               />
             </div>
           )}

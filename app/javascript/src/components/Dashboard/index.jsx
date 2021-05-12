@@ -7,7 +7,7 @@ import Settings from "./Settings";
 
 const Dashboard = () => {
   return (
-    <div className="relative flex flex-col items-start justify-start w-screen h-screen">
+    <div className="relative flex flex-col items-start justify-start w-screen h-screen overflow-x-hidden overflow-y-auto">
       <Navbar />
       <Switch>
         <Route path="/contacts" component={Contacts} />

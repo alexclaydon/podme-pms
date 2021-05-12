@@ -17,7 +17,7 @@ const ContactBlock = ({ name, timestamp, isWaitingRoom = false }) => {
         </div>
         <div>
           <button className={buttonClass}>
-            {isWaitingRoom ? "Admit" : "Kick"}
+            {isWaitingRoom ? "Admit" : "Remove"}
           </button>
         </div>
       </div>

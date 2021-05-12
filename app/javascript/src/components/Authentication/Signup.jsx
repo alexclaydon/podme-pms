@@ -46,7 +46,7 @@ const Signup = ({ history }) => {
   };
 
   return (
-    <div className="flex flex-row items-start justify-center w-screen h-screen px-6 pt-12 bg-white sm:pt-32">
+    <div className="flex flex-row items-start justify-center w-screen h-screen px-6 pt-12 bg-white sm:pt-32 overflow-y-auto">
       <div className="flex flex-col items-start justify-center w-full mx-auto sm:max-w-md">
         <h1 className="mb-1 text-3xl font-extrabold text-gray-800">
           Create your account
