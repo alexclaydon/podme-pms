@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Avatar, Dropdown, Toastr, Button } from "@bigbinary/neetoui";
 import { withRouter } from "react-router-dom";
-import { BrowserView, MobileView, isBrowser } from "react-device-detect";
+import { isMobileOnly, isDesktop } from "react-device-detect";
 import { useAuthDispatch } from "contexts/auth";
 import authenticationApi from "apis/authentication";
 import { resetAuthTokens } from "apis/axios";
+import classnames from "classnames";
 
 const Tabs = () => {
   const navlinkClasses =
@@ -40,6 +41,7 @@ const Tabs = () => {
     </>
   );
 };
+
 const NavBar = () => {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const authDispatch = useAuthDispatch();
@@ -56,18 +58,31 @@ const NavBar = () => {
   };
 
   return (
-    <nav className="sticky top-0 left-0 z-10 w-full bg-gray-900 xl:static">
+    <nav
+      className={classnames("sticky top-0 left-0 z-10 w-full bg-gray-900", {
+        static: isDesktop,
+      })}
+    >
       <div className="container px-4 mx-auto">
-        <div className="grid h-16 grid-cols-3 gap-2">
-          <MobileView viewClassName="flex flex-row justify-start items-center">
-            <Button
-              style="icon"
-              icon={showMobileMenu ? "ri-close-line" : "ri-menu-line"}
-              className="text-2xl"
-              onClick={() => setShowMobileMenu(!showMobileMenu)}
-            />
-          </MobileView>
-          <div className="flex flex-row items-center justify-center flex-shrink-0 xl:justify-start">
+        <div className="grid h-16 grid-cols-12 gap-2">
+          {isMobileOnly && (
+            <div className="flex flex-row items-center justify-start col-span-3">
+              <Button
+                style="icon"
+                icon={showMobileMenu ? "ri-close-line" : "ri-menu-line"}
+                className="text-2xl"
+                onClick={() => setShowMobileMenu(!showMobileMenu)}
+              />
+            </div>
+          )}
+          <div
+            className={classnames(
+              "flex flex-row items-center justify-start flex-shrink-0 col-span-3",
+              {
+                "col-span-6 justify-center": isMobileOnly,
+              }
+            )}
+          >
             <svg
               width="32"
               height="32"
@@ -85,20 +100,22 @@ const NavBar = () => {
               />
             </svg>
           </div>
-          <BrowserView viewClassName="flex flex-row items-center justify-center space-x-2">
-            <Tabs />
-          </BrowserView>
-          <div className="flex flex-row items-center justify-end">
+          {!isMobileOnly && (
+            <div className="flex flex-row items-center justify-center col-span-6 space-x-2">
+              <Tabs />
+            </div>
+          )}
+          <div className="flex flex-row items-center justify-end col-span-3">
             <Dropdown
               customTarget={() => (
                 <div className="flex flex-row items-center justify-end cursor-pointer">
-                  {isBrowser && (
+                  {isDesktop && (
                     <p className="mr-3 text-sm font-medium text-gray-50">
                       Emma Stone
                     </p>
                   )}
                   <Avatar size={32} contact={{ name: "Emma Stone" }} />
-                  {isBrowser && (
+                  {!isMobileOnly && (
                     <i className="ml-1 text-gray-400 ri-arrow-down-s-line"></i>
                   )}
                 </div>
