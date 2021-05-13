@@ -8,6 +8,7 @@ import { initializeLogger } from "common/logger";
 import { setAuthHeaders, registerIntercepts } from "apis/axios";
 import { PageLoader } from "@bigbinary/neetoui";
 import Dashboard from "components/Dashboard";
+import EUI from "components/EUI";
 
 import PrivateRoute from "components/Common/PrivateRoute";
 import PasswordReset from "components/Authentication/ResetPassword";
@@ -48,6 +49,7 @@ const Main = props => {
         <Route exact path="/signup" component={Signup} />
         <Route exact path="/signup/plans" component={Plans} />
         <Route exact path="/login" component={Login} />
+        <Route exact path="/eui" component={EUI} />
         <PrivateRoute
           path="/"
           redirectRoute="/login"
