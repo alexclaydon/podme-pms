@@ -33,7 +33,7 @@ let Room = props => {
                   ulProps={{
                     className: "p-4",
                     style: {
-                      width: "calc(100vw - 32px)",
+                      width: "calc(min(calc(100vw - 32px), 420px))",
                       maxHeight: "70vh",
                     },
                   }}
