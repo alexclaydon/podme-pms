@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Tab, Select } from "@bigbinary/neetoui";
 import { isMobileOnly } from "react-device-detect";
-import BasicInformation from "./BasicInformation";
+import PracticeInformation from "./PracticeInformation";
 import Billing from "./Billing";
 import TeamManagement from "./TeamManagement";
 import WaitingRoom from "./WaitingRoom";
@@ -9,9 +9,9 @@ import PostCallFeedback from "./PostCallFeedback";
 
 const TABS = [
   {
-    label: "Basic Information",
-    value: "Basic Information",
-    component: BasicInformation,
+    label: "Practice Information",
+    value: "Practice Information",
+    component: PracticeInformation,
   },
   {
     label: "Billing",
