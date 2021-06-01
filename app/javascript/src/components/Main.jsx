@@ -5,7 +5,11 @@ import { ToastContainer } from "react-toastify";
 import { either, isEmpty, isNil } from "ramda";
 
 import { initializeLogger } from "common/logger";
-import { setAuthHeaders, registerIntercepts } from "apis/axios";
+import {
+  setAuthHeaders,
+  registerIntercepts,
+  resetAuthTokens,
+} from "apis/axios";
 import { PageLoader } from "@bigbinary/neetoui";
 import Dashboard from "components/Dashboard";
 import EUI from "components/EUI";
@@ -18,6 +22,7 @@ import Plans from "components/Authentication/Plans";
 
 import { useAuthState, useAuthDispatch } from "contexts/auth";
 import { useUserDispatch } from "contexts/user";
+import { ParticipantProvider } from "contexts/participant";
 
 const Main = props => {
   const [loading, setLoading] = useState(true);
@@ -26,10 +31,17 @@ const Main = props => {
   const authDispatch = useAuthDispatch();
   const isLoggedIn = !either(isNil, isEmpty)(authToken);
 
+  const dashboardPaths = ["/", "/contacts", "/settings", "/room"];
+
   useEffect(() => {
-    userDispatch({ type: "SET_USER", payload: { user: props.user } });
     initializeLogger();
     registerIntercepts(authDispatch);
+    if (props.user) {
+      userDispatch({ type: "SET_USER", payload: { user: props.user } });
+    } else {
+      authDispatch({ type: "LOGOUT" });
+      resetAuthTokens();
+    }
     setAuthHeaders(setLoading);
   }, []);
 
@@ -49,13 +61,19 @@ const Main = props => {
         <Route exact path="/signup" component={Signup} />
         <Route exact path="/signup/plans" component={Plans} />
         <Route exact path="/login" component={Login} />
-        <Route exact path="/eui" component={EUI} />
-        <PrivateRoute
-          path="/"
-          redirectRoute="/login"
-          condition={isLoggedIn}
-          component={Dashboard}
-        />
+        {dashboardPaths.includes(window.location.pathname) && (
+          <PrivateRoute
+            path="/"
+            redirectRoute="/login"
+            condition={isLoggedIn}
+            component={Dashboard}
+          />
+        )}
+        <Route path="/:room">
+          <ParticipantProvider>
+            <EUI />
+          </ParticipantProvider>
+        </Route>
       </Switch>
     </BrowserRouter>
   );

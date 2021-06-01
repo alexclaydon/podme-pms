@@ -6,7 +6,7 @@ import { useUserDispatch } from "contexts/user";
 import { Button, Input, Toastr, Checkbox } from "@bigbinary/neetoui";
 import authenticationApi from "apis/authentication";
 
-const Login = ({ history }) => {
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -24,7 +24,8 @@ const Login = ({ history }) => {
       authDispatch({ type: "LOGIN", payload: { auth_token, email, is_admin } });
       userDispatch({ type: "SET_USER", payload: { user } });
       setAuthHeaders();
-      history.push("/");
+      // history.push("/contacts");
+      window.location.href = "/";
       Toastr.success("Logged in successfully.");
     } catch (error) {
       logger.error(error);

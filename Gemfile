@@ -12,6 +12,8 @@ gem "sprockets-rails"
 gem "sass-rails", ">= 6"
 gem "uglifier", ">= 2.7.1"
 
+gem "dotenv-rails"
+
 gem "webpacker"
 
 # React
@@ -67,6 +69,9 @@ gem "letter_opener", group: :development
 
 # yanked v0.3.5
 gem 'mimemagic', github: 'mimemagicrb/mimemagic', ref: '01f92d86d15d85cfd0f20dabd025dcbd36a8a60f'
+
+# genrate json web token
+gem 'jwt'
 
 group :development, :test do
   # Rails integration for factory-bot

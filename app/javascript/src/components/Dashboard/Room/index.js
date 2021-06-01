@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   isDesktop,
   isTablet,
@@ -6,10 +6,65 @@ import {
 } from "react-device-detect";
 import { Dropdown } from "@bigbinary/neetoui";
 import Info from "./Info";
-
+import jitsiTokenApi from "apis/jitsiToken";
+import {
+  handleParticipantJoined,
+  handleParticipantLeft,
+  jitsiInit,
+} from "components/Jitsi";
+import { useUserState } from "contexts/user";
+import { useJitsiDispatch, useJitsiState } from "contexts/jitsi";
+import { practitionerSubscription } from "components/Channels/SessionApproval/session_approval_channel";
+let api;
+let consumer;
 let Room = props => {
   const { isLandscape } = props;
   const isTabletLandscapeOrUpper = isDesktop || (isTablet && isLandscape);
+  const { user } = useUserState();
+  const { jitsiToken, roomName } = useJitsiState();
+  const jitsiDispatch = useJitsiDispatch();
+
+  useEffect(() => {
+    if (user) {
+      consumer = practitionerSubscription({
+        roomName: user.room_name,
+        jitsiDispatch,
+      });
+      getToken();
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (jitsiToken) {
+      api = jitsiInit({ jitsiToken, roomName });
+      api.addEventListener("participantJoined", participant =>
+        handleParticipantJoined(participant, jitsiDispatch)
+      );
+      api.addEventListener("participantLeft", participant =>
+        handleParticipantLeft(participant, jitsiDispatch)
+      );
+      api.addEventListener("videoConferenceLeft", () => api.dispose());
+    }
+    return () => api && api.dispose();
+  }, [jitsiToken]);
+
+  const getToken = async () => {
+    try {
+      const response = await jitsiTokenApi.create({
+        token: { email: user.email },
+      });
+      jitsiDispatch({
+        type: "SET_TOKEN_AND_ROOM_NAME",
+        payload: {
+          jitsiToken: response.data.token,
+          roomName: response.data.room,
+        },
+      });
+    } catch (error) {
+      logger.error(error);
+    }
+  };
+
   return (
     <div className="pms-scrollable__wrapper">
       <div className="container w-full px-4 py-6 mx-auto sm:py-8">
@@ -39,16 +94,19 @@ let Room = props => {
                   }}
                   position="bottom-right"
                 >
-                  <Info />
+                  <Info jitsiApi={api} consumer={consumer} />
                 </Dropdown>
               )}
             </div>
           </div>
           <div className="flex flex-row items-start justify-start">
-            <div className="flex-grow bg-gray-500 rounded h-144"></div>
+            <div
+              className="flex-grow bg-gray-500 rounded h-144"
+              id="meet"
+            ></div>
             {isTabletLandscapeOrUpper && (
               <div className="ml-10 w-80 xl:w-96">
-                <Info />
+                <Info jitsiApi={api} consumer={consumer} />
               </div>
             )}
           </div>

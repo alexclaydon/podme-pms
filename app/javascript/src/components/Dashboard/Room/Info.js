@@ -1,10 +1,26 @@
 import React from "react";
 import { Badge } from "@bigbinary/neetoui";
-import { ROOM_DATA, CONTACT_ROOM_STATUSES } from "./constants";
+import { useJitsiState } from "contexts/jitsi";
+import { formatJoinTime } from "./helpers";
 
-const ContactBlock = ({ name, timestamp, isWaitingRoom = false }) => {
+const ContactBlock = ({
+  name,
+  timestamp,
+  isWaitingRoom = false,
+  participantId,
+  jitsiApi,
+  consumer,
+}) => {
   const buttonClass =
     "inline-flex items-center shadow-sm px-2.5 py-0.5 border border-gray-300 text-sm leading-5 font-medium rounded-full text-gray-700 bg-white hover:bg-gray-50";
+
+  const handleAdmitParticipant = id => {
+    consumer.admit_participant(id);
+  };
+
+  const handleRemoveParticipant = id => {
+    jitsiApi.executeCommand("kickParticipant", id);
+  };
 
   return (
     <div className="py-4">
@@ -16,7 +32,14 @@ const ContactBlock = ({ name, timestamp, isWaitingRoom = false }) => {
           </p>
         </div>
         <div>
-          <button className={buttonClass}>
+          <button
+            className={buttonClass}
+            onClick={() =>
+              isWaitingRoom
+                ? handleAdmitParticipant(participantId)
+                : handleRemoveParticipant(participantId)
+            }
+          >
             {isWaitingRoom ? "Admit" : "Remove"}
           </button>
         </div>
@@ -25,7 +48,8 @@ const ContactBlock = ({ name, timestamp, isWaitingRoom = false }) => {
   );
 };
 
-const Info = () => {
+const Info = ({ jitsiApi, consumer }) => {
+  const { participantsInfo, waitingParticipantsInfo } = useJitsiState();
   return (
     <div className="w-full">
       <div className="mb-8">
@@ -34,12 +58,23 @@ const Info = () => {
         </h4>
         <div className="px-4 border border-gray-200 rounded">
           <div className="divide-y divide-gray-200">
-            {ROOM_DATA.filter(
-              data => data.status === CONTACT_ROOM_STATUSES.joined
-            ).map((contact, index) => {
-              const { name, timestamp } = contact;
+            {participantsInfo.map((participant, index) => {
+              const {
+                displayName,
+                timestamp,
+                formattedDisplayName,
+                id,
+              } = participant;
+              if (formattedDisplayName.includes(" (me)")) return;
               return (
-                <ContactBlock key={index} name={name} timestamp={timestamp} />
+                <ContactBlock
+                  key={index}
+                  name={displayName}
+                  timestamp={formatJoinTime(timestamp)}
+                  participantId={id}
+                  jitsiApi={jitsiApi}
+                  consumer={consumer}
+                />
               );
             })}
           </div>
@@ -52,24 +87,30 @@ const Info = () => {
           </h4>
           <Badge color="green">
             <span className="inline-block w-1.5 h-1.5 mr-2 bg-green-400 rounded-full"></span>
-            <span>1 Person waiting</span>
+            <span>{waitingParticipantsInfo.length} Person waiting</span>
           </Badge>
         </div>
         <div className="px-4 border border-gray-200 rounded">
           <ul className="divide-y divide-gray-200">
-            {ROOM_DATA.filter(
-              data => data.status === CONTACT_ROOM_STATUSES.waiting
-            ).map((contact, index) => {
-              const { name, timestamp } = contact;
-              return (
-                <ContactBlock
-                  key={index}
-                  name={name}
-                  timestamp={timestamp}
-                  isWaitingRoom
-                />
-              );
-            })}
+            {consumer &&
+              waitingParticipantsInfo.map((participant, index) => {
+                const {
+                  participant_name,
+                  participant_room,
+                  timestamp,
+                } = participant;
+                return (
+                  <ContactBlock
+                    key={index}
+                    name={participant_name}
+                    timestamp={formatJoinTime(timestamp)}
+                    participantId={participant_room}
+                    jitsiApi={jitsiApi}
+                    consumer={consumer}
+                    isWaitingRoom
+                  />
+                );
+              })}
           </ul>
         </div>
       </div>

@@ -9,6 +9,7 @@ class User < ApplicationRecord
   has_many :notes, dependent: :delete_all
 
   before_save :ensure_authentication_token_is_present
+  before_save :generate_room_name
 
   validates :first_name, :last_name, :email, presence: true
   validates :email, uniqueness: true
@@ -22,9 +23,20 @@ class User < ApplicationRecord
   end
 
   def as_json(options = {})
-    new_options = options.merge(only: [:email, :first_name, :last_name, :current_sign_in_at])
+    new_options = options.merge(only: [:email, :first_name, :last_name, :current_sign_in_at, :room_name])
 
     super new_options
+  end
+
+  def full_name
+    first_name + " " + last_name
+  end
+
+  def generate_room_name
+    loop do
+      self.room_name = SecureRandom.uuid
+      break room_name unless User.where(room_name: self.room_name).exists?
+    end
   end
 
   private

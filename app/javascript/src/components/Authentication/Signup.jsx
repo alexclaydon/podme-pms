@@ -6,7 +6,7 @@ import authenticationApi from "apis/authentication";
 import { useAuthDispatch } from "contexts/auth";
 import { useUserDispatch } from "contexts/user";
 
-const Signup = ({ history }) => {
+const Signup = () => {
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -37,7 +37,8 @@ const Signup = ({ history }) => {
         payload: { auth_token, email, is_admin: false },
       });
       userDispatch({ type: "SET_USER", payload: { user } });
-      history.push("/");
+      // history.push("/");
+      window.location.href = "/";
     } catch (error) {
       alert(error.response.data.error);
     } finally {

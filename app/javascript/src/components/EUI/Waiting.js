@@ -2,16 +2,16 @@ import React, { useEffect } from "react";
 import WelcomeImage from "images/eui/waiting.svg";
 import { isMobileOnly } from "react-device-detect";
 import { EUI_STATES } from "./constants";
+import { useParticipantState } from "contexts/participant";
 
 const Waiting = ({ setCurrentState }) => {
+  const { permissionGranted } = useParticipantState();
+
   useEffect(() => {
-    const timer = setTimeout(() => {
+    if (permissionGranted) {
       setCurrentState(EUI_STATES.ADMITTED.label);
-    }, 10000);
-    return () => {
-      clearTimeout(timer);
-    };
-  }, []);
+    }
+  }, [permissionGranted]);
 
   return (
     <div className="container z-10 px-6 m-auto fadeIn">

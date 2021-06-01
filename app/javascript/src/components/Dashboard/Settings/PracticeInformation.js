@@ -3,8 +3,11 @@ import { isMobileOnly } from "react-device-detect";
 import { Input, ActionBlock } from "@bigbinary/neetoui/formik";
 import { Label, Avatar, Button } from "@bigbinary/neetoui";
 import { Form, Formik } from "formik";
+import { useUserState } from "contexts/user";
 
 const PracticeInformation = () => {
+  const { user } = useUserState();
+
   const profileImageRef = useRef(null);
 
   const initialValues = {
@@ -47,6 +50,7 @@ const PracticeInformation = () => {
                     name="shareable_url"
                     placeholder="acme-health-clinic"
                     inputWrapperClassName="nui-input--block-add-on"
+                    value={user.room_name}
                     suffix={<Button style="icon" icon="ri-file-copy-line" />}
                   />
                 </div>

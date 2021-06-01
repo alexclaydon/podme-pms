@@ -35,6 +35,7 @@ Rails.application.routes.draw do
       end
 
       resources :users, only: [:show, :create, :update, :destroy], constraints: { id: /.*/ }
+      resource  :jitsi_token, controller: "jitsi_token", only: [:create]
       resources :notes, only: [:index, :create] do
         collection do
           post 'bulk_delete'
