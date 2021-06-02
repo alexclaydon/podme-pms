@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Button, Input, Checkbox } from "@bigbinary/neetoui";
 
@@ -13,9 +13,16 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [loading, setLoading] = useState(false);
-
   const authDispatch = useAuthDispatch();
   const userDispatch = useUserDispatch();
+  const urlParams = new URLSearchParams(location.search);
+
+  useEffect(() => {
+    if (urlParams.has("email")) {
+      const email = urlParams.get("email");
+      setEmail(email);
+    }
+  }, []);
 
   const handleSubmit = async event => {
     event.preventDefault();
@@ -83,6 +90,7 @@ const Signup = () => {
             value={email}
             onChange={e => setEmail(e.target.value)}
             required
+            disabled={urlParams.has("email")}
           />
           <Input
             id="user_password"
@@ -116,7 +124,13 @@ const Signup = () => {
               .
             </p>
           </div>
-          <Button type="submit" loading={loading} label="Signup" fullWidth />
+          <Button
+            type="submit"
+            loading={loading}
+            label="Signup"
+            fullWidth
+            disabled={!urlParams.has("email")}
+          />
         </form>
       </div>
     </div>
