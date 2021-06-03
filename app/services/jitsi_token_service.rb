@@ -31,7 +31,7 @@ class JitsiTokenService
       iss: "chat",
       room: "*",
       sub: Rails.application.secrets.jitsi[:application_id],
-      exp: present_time + 2.hours.to_i,
+      exp: present_time + 5.hours.to_i,
       nbf: present_time,
     }
   end

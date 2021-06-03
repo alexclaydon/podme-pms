@@ -1,4 +1,4 @@
-export const jitsiInit = ({ jitsiToken, roomName }) => {
+export const jitsiInit = ({ jitsiToken, roomName, jitsiDispatch }) => {
   const domain = "8x8.vc";
 
   const options = {
@@ -10,9 +10,16 @@ export const jitsiInit = ({ jitsiToken, roomName }) => {
       // startWithAudioMuted: true,
       // startWithVideoMuted: true,
     },
-    // onload: handleJitsiIframeLoad,
+    onload: () => handleJitsiIframeLoad(jitsiDispatch),
   };
   return new window.JitsiMeetExternalAPI(domain, options);
+};
+
+const handleJitsiIframeLoad = jitsiDispatch => {
+  jitsiDispatch({
+    type: "LOAD_IFRAME",
+    payload: { isIframeLoading: false },
+  });
 };
 
 export const handleParticipantJoined = (participant, jitsiDispatch) => {

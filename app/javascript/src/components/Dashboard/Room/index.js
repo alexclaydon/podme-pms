@@ -4,7 +4,7 @@ import {
   isTablet,
   withOrientationChange,
 } from "react-device-detect";
-import { Dropdown } from "@bigbinary/neetoui";
+import { Dropdown, Button, PageLoader } from "@bigbinary/neetoui";
 import Info from "./Info";
 import jitsiTokenApi from "apis/jitsiToken";
 import {
@@ -21,7 +21,12 @@ let Room = props => {
   const { isLandscape } = props;
   const isTabletLandscapeOrUpper = isDesktop || (isTablet && isLandscape);
   const { user } = useUserState();
-  const { jitsiToken, roomName } = useJitsiState();
+  const {
+    jitsiToken,
+    roomName,
+    isIframeLoading,
+    isSessionStarted,
+  } = useJitsiState();
   const jitsiDispatch = useJitsiDispatch();
 
   useEffect(() => {
@@ -35,18 +40,28 @@ let Room = props => {
   }, [user]);
 
   useEffect(() => {
-    if (jitsiToken) {
-      api = jitsiInit({ jitsiToken, roomName });
+    if (jitsiToken && isSessionStarted) {
+      jitsiDispatch({
+        type: "LOAD_IFRAME",
+        payload: { isIframeLoading: true },
+      });
+      api = jitsiInit({ jitsiToken, roomName, jitsiDispatch });
       api.addEventListener("participantJoined", participant =>
         handleParticipantJoined(participant, jitsiDispatch)
       );
       api.addEventListener("participantLeft", participant =>
         handleParticipantLeft(participant, jitsiDispatch)
       );
-      api.addEventListener("videoConferenceLeft", () => api.dispose());
+      api.addEventListener("videoConferenceLeft", () => {
+        api.dispose();
+        jitsiDispatch({
+          type: "SESSION_STARTED",
+          payload: { isSessionStarted: false },
+        });
+      });
     }
     return () => api && api.dispose();
-  }, [jitsiToken]);
+  }, [jitsiToken, isSessionStarted]);
 
   const getToken = async () => {
     try {
@@ -63,6 +78,13 @@ let Room = props => {
     } catch (error) {
       logger.error(error);
     }
+  };
+
+  const handleStartSession = () => {
+    jitsiDispatch({
+      type: "SESSION_STARTED",
+      payload: { isSessionStarted: true },
+    });
   };
 
   return (
@@ -101,9 +123,19 @@ let Room = props => {
           </div>
           <div className="flex flex-row items-start justify-start">
             <div
-              className="flex-grow bg-gray-500 rounded h-144"
+              className="flex-grow rounded h-144 flex items-center justify-center flex-col"
               id="meet"
-            ></div>
+            >
+              {isIframeLoading && <PageLoader />}
+              {!isSessionStarted && (
+                <Button
+                  type="primary"
+                  onClick={handleStartSession}
+                  label={"Start Session"}
+                  size="large"
+                />
+              )}
+            </div>
             {isTabletLandscapeOrUpper && (
               <div className="ml-10 w-80 xl:w-96">
                 <Info jitsiApi={api} consumer={consumer} />

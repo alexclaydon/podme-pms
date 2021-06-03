@@ -10,6 +10,8 @@ const initialState = {
   roomName: null,
   participantsInfo: [],
   waitingParticipantsInfo: [],
+  isIframeLoading: false,
+  isSessionStarted: false,
 };
 
 const JitsiProvider = ({ children }) => {

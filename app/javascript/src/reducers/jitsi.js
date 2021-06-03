@@ -40,6 +40,20 @@ const jitsiReducer = (state, { type, payload }) => {
     };
   }
 
+  case "LOAD_IFRAME": {
+    return {
+      ...state,
+      ...payload,
+    };
+  }
+
+  case "SESSION_STARTED": {
+    return {
+      ...state,
+      ...payload,
+    };
+  }
+
   default: {
     throw new Error(`Unhandled action type: ${type}`);
   }
