@@ -53,11 +53,12 @@ let Room = props => {
         handleParticipantLeft(participant, jitsiDispatch)
       );
       api.addEventListener("videoConferenceLeft", () => {
-        api.dispose();
         jitsiDispatch({
           type: "SESSION_STARTED",
           payload: { isSessionStarted: false },
         });
+        consumer.practitionerLeft();
+        api.dispose();
       });
     }
     return () => api && api.dispose();

@@ -7,6 +7,7 @@ const ParticipantStateContext = React.createContext();
 const ParticipantDispatchContext = React.createContext();
 const initialState = {
   permissionGranted: false,
+  practitionerLeft: false,
 };
 
 const ParticipantProvider = ({ children }) => {

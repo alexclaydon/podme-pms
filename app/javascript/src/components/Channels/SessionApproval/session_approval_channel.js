@@ -31,6 +31,12 @@ export const practitionerSubscription = ({ roomName, jitsiDispatch }) => {
         });
         handleWaitingParticipantLeft({ participant_room }, jitsiDispatch);
       },
+      practitionerLeft() {
+        this.perform("practitioner_left", {
+          practitioner_left: true,
+          practitioner_room_name: roomName,
+        });
+      },
     }
   );
 

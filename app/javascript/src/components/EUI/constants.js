@@ -21,3 +21,6 @@ export const EUI_STATES = {
     component: Thankyou,
   },
 };
+
+export const practitionerLeftText =
+  "The practitioner has left the session. The session will automatically terminate soon.";

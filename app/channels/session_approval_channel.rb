@@ -9,6 +9,10 @@ class SessionApprovalChannel < ApplicationCable::Channel
     ActionCable.server.broadcast "session_approval_channel_#{data["participant_room"]}", { permission_granted: data["permission_granted"] }
   end
 
+  def practitioner_left(data)
+    ActionCable.server.broadcast "conference_state_channel_#{data["practitioner_room_name"]}", { practitioner_left: data["practitioner_left"], practitioner_room_name: data["practitioner_room_name"] }
+  end
+
   def unsubscribed
   end
 end

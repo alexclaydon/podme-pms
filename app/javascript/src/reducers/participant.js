@@ -7,6 +7,14 @@ const participantReducer = (state, { type, payload }) => {
       ...payload,
     };
   }
+
+  case "PRACTITIONER_LEFT": {
+    return {
+      ...state,
+      ...payload,
+    };
+  }
+
   default: {
     throw new Error(`Unhandled action type: ${type}`);
   }
