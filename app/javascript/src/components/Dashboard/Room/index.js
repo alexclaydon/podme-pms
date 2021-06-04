@@ -4,17 +4,20 @@ import {
   isTablet,
   withOrientationChange,
 } from "react-device-detect";
+import classNames from "classnames";
 import { Dropdown, Button, PageLoader } from "@bigbinary/neetoui";
-import Info from "./Info";
 import jitsiTokenApi from "apis/jitsiToken";
+import { useLocation } from "react-router-dom";
+import { useUserState } from "contexts/user";
+import { useJitsiDispatch, useJitsiState } from "contexts/jitsi";
+import { practitionerSubscription } from "components/Channels/SessionApproval/session_approval_channel";
 import {
   handleParticipantJoined,
   handleParticipantLeft,
   jitsiInit,
 } from "components/Jitsi";
-import { useUserState } from "contexts/user";
-import { useJitsiDispatch, useJitsiState } from "contexts/jitsi";
-import { practitionerSubscription } from "components/Channels/SessionApproval/session_approval_channel";
+import Info from "./Info";
+
 let api;
 let consumer;
 let Room = props => {
@@ -28,6 +31,7 @@ let Room = props => {
     isSessionStarted,
   } = useJitsiState();
   const jitsiDispatch = useJitsiDispatch();
+  const { pathname } = useLocation();
 
   useEffect(() => {
     if (user) {
@@ -94,8 +98,13 @@ let Room = props => {
     });
   };
 
+  var wrapperClass = classNames({
+    "pms-scrollable__wrapper": true,
+    hidden: pathname !== "/room",
+  });
+
   return (
-    <div className="pms-scrollable__wrapper">
+    <div className={wrapperClass}>
       <div className="container w-full px-4 py-6 mx-auto sm:py-8">
         <div className="flex flex-col items-stretch justify-start">
           <div className="flex flex-row items-center justify-between mb-6">
