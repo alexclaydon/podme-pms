@@ -2,16 +2,75 @@ import React, { useEffect } from "react";
 import WelcomeImage from "images/eui/waiting.svg";
 import { isMobileOnly } from "react-device-detect";
 import { EUI_STATES } from "./constants";
-import { useParticipantState } from "contexts/participant";
+import {
+  useParticipantDispatch,
+  useParticipantState,
+} from "contexts/participant";
+import { conferenceStateSubscription } from "components/Channels/SessionApproval/conference_state_channel";
+import { useParams } from "react-router-dom";
+import { useJitsiDispatch } from "contexts/jitsi";
+import { uuid } from "components/Dashboard/Room/helpers";
+import jitsiTokenApi from "apis/jitsiToken";
+import { participantSubscription } from "components/Channels/SessionApproval/session_approval_channel";
+const randomId = uuid();
 
 const Waiting = ({ setCurrentState }) => {
   const { permissionGranted } = useParticipantState();
+  const { room } = useParams();
+  const participantDispatch = useParticipantDispatch();
+  const jitsiDispatch = useJitsiDispatch();
+  const {
+    practitionerJoined,
+    participantName,
+    timestamp,
+  } = useParticipantState();
+  const participantId = participantName + randomId;
+
+  useEffect(() => {
+    participantSubscription({
+      roomId: participantId,
+      participantDispatch,
+      practitionerRoomName: room,
+    });
+    conferenceStateSubscription({
+      practitionerRoomName: room,
+      participantDispatch,
+    });
+  }, []);
+
+  useEffect(() => {
+    if (practitionerJoined) {
+      getToken(participantId);
+    }
+  }, [practitionerJoined]);
 
   useEffect(() => {
     if (permissionGranted) {
       setCurrentState(EUI_STATES.ADMITTED.label);
     }
   }, [permissionGranted]);
+
+  const getToken = async participantId => {
+    try {
+      const response = await jitsiTokenApi.create({
+        token: {
+          name: participantName,
+          id: participantId,
+          room_name: room,
+          timestamp,
+        },
+      });
+      jitsiDispatch({
+        type: "SET_TOKEN_AND_ROOM_NAME",
+        payload: {
+          jitsiToken: response.data.token,
+          roomName: response.data.room,
+        },
+      });
+    } catch (error) {
+      logger.error(error);
+    }
+  };
 
   return (
     <div className="container z-10 px-6 m-auto fadeIn">
@@ -33,10 +92,16 @@ const Waiting = ({ setCurrentState }) => {
               {isMobileOnly && (
                 <img src={WelcomeImage} className="w-4/5 h-auto mx-auto" />
               )}
-              <p className="text-base leading-relaxed text-center text-gray-600 xl:text-lg sm:text-left">
-                When your practitioner becomes available, you will automatically
+              <p
+                className={`text-base leading-relaxed text-center text-gray-600 xl:text-lg sm:text-left ${
+                  practitionerJoined && "text-red-400"
+                }`}
+              >
+                {practitionerJoined
+                  ? "Practitioner started the session. Asking for Permission."
+                  : `When your practitioner becomes available, you will automatically
                 be placed into conference. In the meantime, please see below
-                content specifically provided for your consideration.{" "}
+                content specifically provided for your consideration.`}
               </p>
             </div>
           </div>

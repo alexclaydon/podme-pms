@@ -3,28 +3,17 @@ import { Button, Alert } from "@bigbinary/neetoui";
 import { EUI_STATES, practitionerLeftText } from "./constants";
 import { jitsiInit } from "components/Jitsi";
 import { useJitsiDispatch, useJitsiState } from "contexts/jitsi";
-import { conferenceStateSubscription } from "components/Channels/SessionApproval/conference_state_channel";
-import { useParams } from "react-router-dom";
-import {
-  useParticipantDispatch,
-  useParticipantState,
-} from "contexts/participant";
+import { useParticipantState } from "contexts/participant";
 let api;
 const Admitted = ({ setCurrentState }) => {
   const [practitionerLeftAlert, setPractitionerLeftAlert] = useState(false);
   const { jitsiToken, roomName } = useJitsiState();
-  const { room } = useParams();
-  const participantDispatch = useParticipantDispatch();
   const jitsiDispatch = useJitsiDispatch();
   const { practitionerLeft } = useParticipantState();
 
   useEffect(() => {
     if (jitsiToken) {
       api = jitsiInit({ jitsiToken, roomName, jitsiDispatch });
-      conferenceStateSubscription({
-        practitionerRoomName: room,
-        participantDispatch,
-      });
       api.addEventListener("videoConferenceLeft", () =>
         setCurrentState(EUI_STATES.THANKYOU.label)
       );

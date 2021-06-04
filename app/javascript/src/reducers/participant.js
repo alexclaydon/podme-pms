@@ -15,6 +15,20 @@ const participantReducer = (state, { type, payload }) => {
     };
   }
 
+  case "PRACTITIONER_JOINED": {
+    return {
+      ...state,
+      ...payload,
+    };
+  }
+
+  case "SET_PARTICIPANT_NAME": {
+    return {
+      ...state,
+      ...payload,
+    };
+  }
+
   default: {
     throw new Error(`Unhandled action type: ${type}`);
   }

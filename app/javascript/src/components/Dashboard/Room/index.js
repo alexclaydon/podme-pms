@@ -64,6 +64,12 @@ let Room = props => {
     return () => api && api.dispose();
   }, [jitsiToken, isSessionStarted]);
 
+  useEffect(() => {
+    if (isSessionStarted) {
+      consumer.practitionerJoined();
+    }
+  }, [isSessionStarted]);
+
   const getToken = async () => {
     try {
       const response = await jitsiTokenApi.create({

@@ -22,6 +22,12 @@ export const conferenceStateSubscription = ({
               payload: { practitionerLeft: data.practitioner_left },
             });
           }
+          if (data.practitioner_joined) {
+            participantDispatch({
+              type: "PRACTITIONER_JOINED",
+              payload: { practitionerJoined: data.practitioner_joined },
+            });
+          }
         } else {
           logger.log(data, "participant received data from error");
         }

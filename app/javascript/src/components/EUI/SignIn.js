@@ -3,43 +3,20 @@ import { Input, Button } from "@bigbinary/neetoui";
 import { isMobile } from "react-device-detect";
 import Pattern from "images/eui/pattern.svg";
 import { EUI_STATES } from "./constants";
-import jitsiTokenApi from "apis/jitsiToken";
-import { useJitsiDispatch } from "contexts/jitsi";
-import { participantSubscription } from "components/Channels/SessionApproval/session_approval_channel";
-import { uuid } from "components/Dashboard/Room/helpers";
 import { useParticipantDispatch } from "contexts/participant";
-import { useParams } from "react-router-dom";
 
 const SignIn = ({ setCurrentState }) => {
   const [name, setName] = useState("");
-  const jitsiDispatch = useJitsiDispatch();
   const participantDispatch = useParticipantDispatch();
-  const { room } = useParams();
 
   const handleSignIn = e => {
     e.preventDefault();
     if (name) {
-      const participantId = name + uuid();
-      participantSubscription({ roomId: participantId, participantDispatch });
-      getToken(participantId);
-    }
-  };
-
-  const getToken = async participantId => {
-    try {
-      const response = await jitsiTokenApi.create({
-        token: { name: name, id: participantId, room_name: room },
-      });
-      jitsiDispatch({
-        type: "SET_TOKEN_AND_ROOM_NAME",
-        payload: {
-          jitsiToken: response.data.token,
-          roomName: response.data.room,
-        },
+      participantDispatch({
+        type: "SET_PARTICIPANT_NAME",
+        payload: { participantName: name, timestamp: new Date() },
       });
       setCurrentState(EUI_STATES.WAITING.label);
-    } catch (error) {
-      logger.error(error);
     }
   };
 

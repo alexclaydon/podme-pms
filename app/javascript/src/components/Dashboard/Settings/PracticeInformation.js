@@ -46,7 +46,7 @@ const PracticeInformation = () => {
                   </div>
                   <Input
                     type="url"
-                    prefix="podme.io/"
+                    prefix="app.podme.io/"
                     name="shareable_url"
                     placeholder="acme-health-clinic"
                     inputWrapperClassName="nui-input--block-add-on"

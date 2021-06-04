@@ -8,8 +8,8 @@ class User < ApplicationRecord
 
   has_many :notes, dependent: :delete_all
 
+  before_create :generate_room_name
   before_save :ensure_authentication_token_is_present
-  before_save :generate_room_name
 
   validates :first_name, :last_name, :email, presence: true
   validates :email, uniqueness: true

@@ -24,11 +24,11 @@ class Api::V1::JitsiTokenController < Api::V1::BaseController
     end
 
     def token_params
-      params.require(:token).permit(:email, :name, :room_name, :id)
+      params.require(:token).permit(:email, :name, :room_name, :id, :timestamp)
     end
 
     def ask_permission_to_join_call
-      ActionCable.server.broadcast("session_approval_channel_#{token_params[:room_name]}", { participant_name: token_params[:name], participant_room: "#{token_params[:id]}" })
+      ActionCable.server.broadcast("session_approval_channel_#{token_params[:room_name]}", { participant_name: token_params[:name], participant_room: token_params[:id], timestamp: token_params[:timestamp] })
     end
 
     def room_name

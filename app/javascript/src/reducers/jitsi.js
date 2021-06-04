@@ -24,10 +24,17 @@ const jitsiReducer = (state, { type, payload }) => {
   }
 
   case "ADD_WAITING_PARTICIPANT": {
-    return {
-      ...state,
-      waitingParticipantsInfo: [...state.waitingParticipantsInfo, payload],
-    };
+    return state.waitingParticipantsInfo.find(
+      participant => participant.participant_room == payload.participant_room
+    )
+      ? state
+      : {
+        ...state,
+        waitingParticipantsInfo: [
+          ...state.waitingParticipantsInfo,
+          payload,
+        ],
+      };
   }
 
   case "REMOVE_WAITING_PARTICIPANT": {
@@ -48,10 +55,9 @@ const jitsiReducer = (state, { type, payload }) => {
   }
 
   case "SESSION_STARTED": {
-    return {
-      ...state,
-      ...payload,
-    };
+    return payload.isSessionStarted
+      ? { ...state, ...payload }
+      : { ...state, waitingParticipantsInfo: [], ...payload };
   }
 
   default: {

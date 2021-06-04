@@ -9,6 +9,7 @@ export const practitionerSubscription = ({ roomName, jitsiDispatch }) => {
     {
       channel: "SessionApprovalChannel",
       room_id: roomName,
+      role: "practitioner",
     },
     {
       connected() {},
@@ -37,20 +38,32 @@ export const practitionerSubscription = ({ roomName, jitsiDispatch }) => {
           practitioner_room_name: roomName,
         });
       },
+      practitionerJoined() {
+        this.perform("practitioner_joined", {
+          practitioner_room_name: roomName,
+        });
+      },
     }
   );
 
   return subscription;
 };
 
-export const participantSubscription = ({ roomId, participantDispatch }) => {
+export const participantSubscription = ({
+  roomId,
+  participantDispatch,
+  practitionerRoomName,
+}) => {
   const subscription = consumer.subscriptions.create(
     {
       channel: "SessionApprovalChannel",
       room_id: roomId,
+      role: "participant",
     },
     {
-      connected() {},
+      connected() {
+        this.getSessionState();
+      },
       received(data) {
         if (!data.error) {
           if (data.permission_granted) {
@@ -59,9 +72,20 @@ export const participantSubscription = ({ roomId, participantDispatch }) => {
               payload: { permissionGranted: data.permission_granted },
             });
           }
+          if (data.practitioner_join_status) {
+            participantDispatch({
+              type: "PRACTITIONER_JOINED",
+              payload: { practitionerJoined: data.practitioner_joined },
+            });
+          }
         } else {
-          logger.log(data, "guest received data from error");
+          logger.log(data, "participant received data from error");
         }
+      },
+      getSessionState() {
+        this.perform("practitioner_join_status", {
+          practitioner_room_name: practitionerRoomName,
+        });
       },
       disconnected() {
         logger.log("participant is disconnected");

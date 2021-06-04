@@ -49,7 +49,11 @@ const ContactBlock = ({
 };
 
 const Info = ({ jitsiApi, consumer }) => {
-  const { participantsInfo, waitingParticipantsInfo } = useJitsiState();
+  const {
+    participantsInfo,
+    waitingParticipantsInfo,
+    isSessionStarted,
+  } = useJitsiState();
   return (
     <div className="w-full">
       <div className="mb-8">
@@ -58,25 +62,26 @@ const Info = ({ jitsiApi, consumer }) => {
         </h4>
         <div className="px-4 border border-gray-200 rounded">
           <div className="divide-y divide-gray-200">
-            {participantsInfo.map((participant, index) => {
-              const {
-                displayName,
-                timestamp,
-                formattedDisplayName,
-                id,
-              } = participant;
-              if (formattedDisplayName.includes(" (me)")) return;
-              return (
-                <ContactBlock
-                  key={index}
-                  name={displayName}
-                  timestamp={formatJoinTime(timestamp)}
-                  participantId={id}
-                  jitsiApi={jitsiApi}
-                  consumer={consumer}
-                />
-              );
-            })}
+            {isSessionStarted &&
+              participantsInfo.map((participant, index) => {
+                const {
+                  displayName,
+                  timestamp,
+                  formattedDisplayName,
+                  id,
+                } = participant;
+                if (formattedDisplayName.includes(" (me)")) return;
+                return (
+                  <ContactBlock
+                    key={index}
+                    name={displayName}
+                    timestamp={formatJoinTime(timestamp)}
+                    participantId={id}
+                    jitsiApi={jitsiApi}
+                    consumer={consumer}
+                  />
+                );
+              })}
           </div>
         </div>
       </div>
@@ -92,7 +97,8 @@ const Info = ({ jitsiApi, consumer }) => {
         </div>
         <div className="px-4 border border-gray-200 rounded">
           <ul className="divide-y divide-gray-200">
-            {consumer &&
+            {isSessionStarted &&
+              consumer &&
               waitingParticipantsInfo.map((participant, index) => {
                 const {
                   participant_name,

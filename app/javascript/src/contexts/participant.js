@@ -8,6 +8,9 @@ const ParticipantDispatchContext = React.createContext();
 const initialState = {
   permissionGranted: false,
   practitionerLeft: false,
+  practitionerJoined: false,
+  participantName: "",
+  timestamp: "",
 };
 
 const ParticipantProvider = ({ children }) => {

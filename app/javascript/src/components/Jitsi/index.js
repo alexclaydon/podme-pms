@@ -7,8 +7,8 @@ export const jitsiInit = ({ jitsiToken, roomName, jitsiDispatch }) => {
     jwt: jitsiToken,
     configOverwrite: {
       prejoinPageEnabled: false,
-      // startWithAudioMuted: true,
-      // startWithVideoMuted: true,
+      startWithAudioMuted: false,
+      startWithVideoMuted: false,
     },
     onload: () => handleJitsiIframeLoad(jitsiDispatch),
   };
@@ -41,7 +41,6 @@ export const handleWaitingParticipantJoined = (participant, jitsiDispatch) => {
     type: "ADD_WAITING_PARTICIPANT",
     payload: {
       ...participant,
-      timestamp: new Date(),
     },
   });
 };
