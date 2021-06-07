@@ -4,12 +4,15 @@ import { Input, ActionBlock } from "@bigbinary/neetoui/formik";
 import { Label, Avatar, Button } from "@bigbinary/neetoui";
 import { Form, Formik } from "formik";
 import { useUserState } from "contexts/user";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
 const PracticeInformation = () => {
   const { user } = useUserState();
 
   const profileImageRef = useRef(null);
-
+  const domain = "app.podme.io/";
+  const body =
+    "Please find below a link to your video call session with your practitioner:%0d%0a";
   const initialValues = {
     office_name: "Acme Health Clinic",
     shareable_url: "acme-health-clinic",
@@ -18,6 +21,12 @@ const PracticeInformation = () => {
       "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixqx=5DjPIwWBjo&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
   };
   const { office_name, profile_image } = initialValues;
+
+  const handleShareLink = () => {
+    window.open(
+      `mailto:"?subject=Session Link&body=${body + domain + user.room_name}`
+    );
+  };
 
   return (
     <div className="w-full">
@@ -42,7 +51,13 @@ const PracticeInformation = () => {
                 <div className="flex-grow max-w-md">
                   <div className="flex flex-row items-center justify-between mb-2">
                     <Label>Shareable Room Link</Label>
-                    {isMobileOnly && <Button style="link" label="Share Link" />}
+                    {isMobileOnly && (
+                      <Button
+                        style="link"
+                        label="Share Link"
+                        onClick={handleShareLink}
+                      />
+                    )}
                   </div>
                   <Input
                     type="url"
@@ -51,7 +66,11 @@ const PracticeInformation = () => {
                     placeholder="acme-health-clinic"
                     inputWrapperClassName="nui-input--block-add-on"
                     value={user.room_name}
-                    suffix={<Button style="icon" icon="ri-file-copy-line" />}
+                    suffix={
+                      <CopyToClipboard text={`app.podme.io/${user.room_name}`}>
+                        <Button style="icon" icon="ri-file-copy-line" />
+                      </CopyToClipboard>
+                    }
                   />
                 </div>
                 {!isMobileOnly && (
@@ -59,6 +78,7 @@ const PracticeInformation = () => {
                     style="link"
                     label="Share Link"
                     className="mt-6 ml-6"
+                    onClick={handleShareLink}
                   />
                 )}
               </div>

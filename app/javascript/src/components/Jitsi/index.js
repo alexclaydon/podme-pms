@@ -9,6 +9,7 @@ export const jitsiInit = ({ jitsiToken, roomName, jitsiDispatch }) => {
       prejoinPageEnabled: false,
       startWithAudioMuted: false,
       startWithVideoMuted: false,
+      // brandingRoomAlias: "roomName",
     },
     onload: () => handleJitsiIframeLoad(jitsiDispatch),
   };

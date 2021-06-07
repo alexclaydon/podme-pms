@@ -7,6 +7,7 @@ import { useAuthDispatch } from "contexts/auth";
 import authenticationApi from "apis/authentication";
 import { resetAuthTokens } from "apis/axios";
 import classnames from "classnames";
+import { useUserState } from "contexts/user";
 
 const Tabs = () => {
   const navlinkClasses =
@@ -14,14 +15,14 @@ const Tabs = () => {
 
   return (
     <>
-      <NavLink
+      {/* <NavLink
         to="/contacts"
         activeClassName="bg-gray-800"
         className={navlinkClasses}
       >
         <i className="text-gray-200 ri-user-star-fill"></i>
         <span>Contacts</span>
-      </NavLink>
+      </NavLink> */}
       <NavLink
         to="/room"
         activeClassName="bg-gray-800"
@@ -45,6 +46,8 @@ const Tabs = () => {
 const NavBar = () => {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const authDispatch = useAuthDispatch();
+  const { user } = useUserState();
+  const fullName = user.first_name + " " + user.last_name;
 
   const handleLogout = async () => {
     try {
@@ -111,10 +114,10 @@ const NavBar = () => {
                 <div className="flex flex-row items-center justify-end cursor-pointer">
                   {isDesktop && (
                     <p className="mr-3 text-sm font-medium text-gray-50">
-                      Emma Stone
+                      {fullName}
                     </p>
                   )}
-                  <Avatar size={32} contact={{ name: "Emma Stone" }} />
+                  <Avatar size={32} contact={{ fullName }} />
                   {!isMobileOnly && (
                     <i className="ml-1 text-gray-400 ri-arrow-down-s-line"></i>
                   )}
@@ -122,7 +125,7 @@ const NavBar = () => {
               )}
               position="bottom-right"
             >
-              <li>Profile Settings</li>
+              {/* <li>Profile Settings</li> */}
               <li
                 onClick={() => handleLogout()}
                 className="text-red-500 hover:text-red-600"

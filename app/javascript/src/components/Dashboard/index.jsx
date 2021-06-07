@@ -12,7 +12,7 @@ const Dashboard = () => {
       <Switch>
         <Route path="/contacts" component={Contacts} />
         <Route path="/settings" component={Settings} />
-        <Redirect exact from="/" to="/contacts" />
+        <Redirect exact from="/" to="/settings" />
       </Switch>
       <Room />
     </div>

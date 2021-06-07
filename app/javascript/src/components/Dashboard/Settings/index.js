@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Tab, Select } from "@bigbinary/neetoui";
 import { isMobileOnly } from "react-device-detect";
 import PracticeInformation from "./PracticeInformation";
-import Billing from "./Billing";
-import TeamManagement from "./TeamManagement";
+// import Billing from "./Billing";
+// import TeamManagement from "./TeamManagement";
 import WaitingRoom from "./WaitingRoom";
 import PostCallFeedback from "./PostCallFeedback";
 
@@ -13,16 +13,16 @@ const TABS = [
     value: "Practice Information",
     component: PracticeInformation,
   },
-  {
-    label: "Billing",
-    value: "Billing",
-    component: Billing,
-  },
-  {
-    label: "Team Management",
-    value: "Team Management",
-    component: TeamManagement,
-  },
+  // {
+  //   label: "Billing",
+  //   value: "Billing",
+  //   component: Billing,
+  // },
+  // {
+  //   label: "Team Management",
+  //   value: "Team Management",
+  //   component: TeamManagement,
+  // },
   {
     label: "Waiting Room",
     value: "Waiting Room",
