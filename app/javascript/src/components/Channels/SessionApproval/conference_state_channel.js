@@ -19,13 +19,19 @@ export const conferenceStateSubscription = ({
           ) {
             participantDispatch({
               type: "PRACTITIONER_LEFT",
-              payload: { practitionerLeft: data.practitioner_left },
+              payload: {
+                practitionerLeft: data.practitioner_left,
+                practitionerJoined: false,
+              },
             });
           }
           if (data.practitioner_joined) {
             participantDispatch({
               type: "PRACTITIONER_JOINED",
-              payload: { practitionerJoined: data.practitioner_joined },
+              payload: {
+                practitionerJoined: data.practitioner_joined,
+                practitionerLeft: false,
+              },
             });
           }
         } else {

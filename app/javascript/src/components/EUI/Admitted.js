@@ -5,11 +5,12 @@ import { jitsiInit } from "components/Jitsi";
 import { useJitsiDispatch, useJitsiState } from "contexts/jitsi";
 import { useParticipantState } from "contexts/participant";
 let api;
+let closePageAfter60s;
 const Admitted = ({ setCurrentState }) => {
   const [practitionerLeftAlert, setPractitionerLeftAlert] = useState(false);
   const { jitsiToken, roomName } = useJitsiState();
   const jitsiDispatch = useJitsiDispatch();
-  const { practitionerLeft } = useParticipantState();
+  const { practitionerLeft, practitionerJoined } = useParticipantState();
 
   useEffect(() => {
     if (jitsiToken) {
@@ -17,6 +18,11 @@ const Admitted = ({ setCurrentState }) => {
       api.addEventListener("videoConferenceLeft", () =>
         setCurrentState(EUI_STATES.THANKYOU.label)
       );
+      api.addEventListener("participantKickedOut", participant => {
+        if (participant.kicked.local) {
+          setCurrentState(EUI_STATES.THANKYOU.label);
+        }
+      });
     }
     return () => api && api.dispose();
   }, [jitsiToken]);
@@ -24,9 +30,19 @@ const Admitted = ({ setCurrentState }) => {
   useEffect(() => {
     if (practitionerLeft) {
       setPractitionerLeftAlert(true);
-      setTimeout(() => setCurrentState(EUI_STATES.THANKYOU.label), 60000);
+      closePageAfter60s = setTimeout(
+        () => setCurrentState(EUI_STATES.THANKYOU.label),
+        60000
+      );
     }
   }, [practitionerLeft]);
+
+  useEffect(() => {
+    if (practitionerJoined) {
+      setPractitionerLeftAlert(false);
+      clearTimeout(closePageAfter60s);
+    }
+  }, [practitionerJoined]);
 
   return (
     <div className="w-full max-w-6xl px-6 m-auto fadeIn">
