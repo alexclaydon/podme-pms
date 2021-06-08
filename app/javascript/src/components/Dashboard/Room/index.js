@@ -70,7 +70,7 @@ let Room = props => {
 
   useEffect(() => {
     if (isSessionStarted) {
-      consumer.practitionerJoined();
+      consumer.practitionerStartedSession();
     }
   }, [isSessionStarted]);
 
@@ -98,7 +98,7 @@ let Room = props => {
     });
   };
 
-  var wrapperClass = classNames({
+  let wrapperClass = classNames({
     "pms-scrollable__wrapper": true,
     hidden: pathname !== "/room",
   });

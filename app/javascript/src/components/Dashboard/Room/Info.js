@@ -2,6 +2,7 @@ import React from "react";
 import { Badge } from "@bigbinary/neetoui";
 import { useJitsiState } from "contexts/jitsi";
 import { formatJoinTime } from "./helpers";
+import classNames from "classnames";
 
 const ContactBlock = ({
   name,
@@ -10,10 +11,18 @@ const ContactBlock = ({
   participantId,
   jitsiApi,
   consumer,
+  isSessionStarted,
 }) => {
-  const buttonClass =
+  const buttonClassNames =
     "inline-flex items-center shadow-sm px-2.5 py-0.5 border border-gray-300 text-sm leading-5 font-medium rounded-full text-gray-700 bg-white hover:bg-gray-50";
 
+  const isWaitingRoomParticipantAndSessionNotStarted =
+    isWaitingRoom && !isSessionStarted;
+
+  let buttonClass = classNames({
+    [buttonClassNames]: true,
+    "cursor-not-allowed opacity-60": isWaitingRoomParticipantAndSessionNotStarted,
+  });
   const handleAdmitParticipant = id => {
     consumer.admit_participant(id);
   };
@@ -39,6 +48,7 @@ const ContactBlock = ({
                 ? handleAdmitParticipant(participantId)
                 : handleRemoveParticipant(participantId)
             }
+            disabled={isWaitingRoomParticipantAndSessionNotStarted}
           >
             {isWaitingRoom ? "Admit" : "Remove"}
           </button>
@@ -54,6 +64,7 @@ const Info = ({ jitsiApi, consumer }) => {
     waitingParticipantsInfo,
     isSessionStarted,
   } = useJitsiState();
+
   return (
     <div className="w-full">
       <div className="mb-8">
@@ -79,6 +90,7 @@ const Info = ({ jitsiApi, consumer }) => {
                     participantId={id}
                     jitsiApi={jitsiApi}
                     consumer={consumer}
+                    isSessionStarted={isSessionStarted}
                   />
                 );
               })}
@@ -97,8 +109,7 @@ const Info = ({ jitsiApi, consumer }) => {
         </div>
         <div className="px-4 border border-gray-200 rounded">
           <ul className="divide-y divide-gray-200">
-            {isSessionStarted &&
-              consumer &&
+            {consumer &&
               waitingParticipantsInfo.map((participant, index) => {
                 const {
                   participant_name,
@@ -114,6 +125,7 @@ const Info = ({ jitsiApi, consumer }) => {
                     jitsiApi={jitsiApi}
                     consumer={consumer}
                     isWaitingRoom
+                    isSessionStarted={isSessionStarted}
                   />
                 );
               })}

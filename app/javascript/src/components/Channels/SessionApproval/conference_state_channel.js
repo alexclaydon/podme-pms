@@ -21,15 +21,24 @@ export const conferenceStateSubscription = ({
               type: "PRACTITIONER_LEFT",
               payload: {
                 practitionerLeft: data.practitioner_left,
-                practitionerJoined: false,
+                practitionerStartedSession: false,
               },
             });
           }
-          if (data.practitioner_joined) {
+          if (data.is_practitioner_online) {
             participantDispatch({
-              type: "PRACTITIONER_JOINED",
+              type: "PRACTITIONER_IS_ONLINE",
               payload: {
-                practitionerJoined: data.practitioner_joined,
+                isPractitionerOnline: data.is_practitioner_online,
+                askForPermission: true,
+              },
+            });
+          }
+          if (data.is_session_started) {
+            participantDispatch({
+              type: "PRACTITIONER_STARTED_SESSION",
+              payload: {
+                practitionerStartedSession: data.is_session_started,
                 practitionerLeft: false,
               },
             });

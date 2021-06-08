@@ -10,7 +10,10 @@ const Admitted = ({ setCurrentState }) => {
   const [practitionerLeftAlert, setPractitionerLeftAlert] = useState(false);
   const { jitsiToken, roomName } = useJitsiState();
   const jitsiDispatch = useJitsiDispatch();
-  const { practitionerLeft, practitionerJoined } = useParticipantState();
+  const {
+    practitionerLeft,
+    practitionerStartedSession,
+  } = useParticipantState();
 
   useEffect(() => {
     if (jitsiToken) {
@@ -38,11 +41,11 @@ const Admitted = ({ setCurrentState }) => {
   }, [practitionerLeft]);
 
   useEffect(() => {
-    if (practitionerJoined) {
+    if (practitionerStartedSession) {
       setPractitionerLeftAlert(false);
       clearTimeout(closePageAfter60s);
     }
-  }, [practitionerJoined]);
+  }, [practitionerStartedSession]);
 
   return (
     <div className="w-full max-w-6xl px-6 m-auto fadeIn">

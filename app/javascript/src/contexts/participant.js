@@ -6,11 +6,13 @@ import participantReducer from "reducers/participant";
 const ParticipantStateContext = React.createContext();
 const ParticipantDispatchContext = React.createContext();
 const initialState = {
-  permissionGranted: false,
-  practitionerLeft: false,
-  practitionerJoined: false,
   participantName: "",
   timestamp: "",
+  isPractitionerOnline: false,
+  askForPermission: true,
+  permissionGranted: false,
+  practitionerStartedSession: false,
+  practitionerLeft: false,
 };
 
 const ParticipantProvider = ({ children }) => {

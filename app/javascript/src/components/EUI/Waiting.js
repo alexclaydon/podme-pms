@@ -12,6 +12,7 @@ import { useJitsiDispatch } from "contexts/jitsi";
 import { uuid } from "components/Dashboard/Room/helpers";
 import jitsiTokenApi from "apis/jitsiToken";
 import { participantSubscription } from "components/Channels/SessionApproval/session_approval_channel";
+import classNames from "classnames";
 const randomId = uuid();
 
 const Waiting = ({ setCurrentState }) => {
@@ -20,9 +21,11 @@ const Waiting = ({ setCurrentState }) => {
   const participantDispatch = useParticipantDispatch();
   const jitsiDispatch = useJitsiDispatch();
   const {
-    practitionerJoined,
+    isPractitionerOnline,
     participantName,
     timestamp,
+    practitionerStartedSession,
+    askForPermission,
   } = useParticipantState();
   const participantId = participantName + randomId;
 
@@ -36,13 +39,14 @@ const Waiting = ({ setCurrentState }) => {
       practitionerRoomName: room,
       participantDispatch,
     });
+    getToken(participantId);
   }, []);
 
   useEffect(() => {
-    if (practitionerJoined) {
+    if (isPractitionerOnline && askForPermission) {
       getToken(participantId);
     }
-  }, [practitionerJoined]);
+  }, [isPractitionerOnline, askForPermission]);
 
   useEffect(() => {
     if (permissionGranted) {
@@ -67,10 +71,22 @@ const Waiting = ({ setCurrentState }) => {
           roomName: response.data.room,
         },
       });
+      participantDispatch({
+        type: "ASK_FOR_PERMISSION",
+        payload: { askForPermission: false },
+      });
     } catch (error) {
       logger.error(error);
     }
   };
+
+  const isPractitionerOnlineAndStartedSession =
+    isPractitionerOnline && practitionerStartedSession;
+
+  let waitingTextClass = classNames({
+    "text-base leading-relaxed text-center text-gray-600 xl:text-lg sm:text-left": true,
+    "text-red-400": isPractitionerOnlineAndStartedSession,
+  });
 
   return (
     <div className="container z-10 px-6 m-auto fadeIn">
@@ -92,12 +108,8 @@ const Waiting = ({ setCurrentState }) => {
               {isMobileOnly && (
                 <img src={WelcomeImage} className="w-4/5 h-auto mx-auto" />
               )}
-              <p
-                className={`text-base leading-relaxed text-center text-gray-600 xl:text-lg sm:text-left ${
-                  practitionerJoined && "text-red-400"
-                }`}
-              >
-                {practitionerJoined
+              <p className={waitingTextClass}>
+                {isPractitionerOnlineAndStartedSession
                   ? "Practitioner started the session. Asking for Permission."
                   : `When your practitioner becomes available, you will automatically
                 be placed into conference. In the meantime, please see below

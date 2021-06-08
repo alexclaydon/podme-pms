@@ -12,7 +12,9 @@ export const practitionerSubscription = ({ roomName, jitsiDispatch }) => {
       role: "practitioner",
     },
     {
-      connected() {},
+      connected() {
+        this.practitionerIsOnline();
+      },
       disconnected() {
         logger.log("practitioner is disconnected");
       },
@@ -38,8 +40,13 @@ export const practitionerSubscription = ({ roomName, jitsiDispatch }) => {
           practitioner_room_name: roomName,
         });
       },
-      practitionerJoined() {
-        this.perform("practitioner_joined", {
+      practitionerIsOnline() {
+        this.perform("practitioner_is_online", {
+          practitioner_room_name: roomName,
+        });
+      },
+      practitionerStartedSession() {
+        this.perform("practitioner_started_session", {
           practitioner_room_name: roomName,
         });
       },
@@ -74,8 +81,11 @@ export const participantSubscription = ({
           }
           if (data.practitioner_join_status) {
             participantDispatch({
-              type: "PRACTITIONER_JOINED",
-              payload: { practitionerJoined: data.practitioner_joined },
+              type: "PRACTITIONER_IS_ONLINE",
+              payload: {
+                isPractitionerOnline: data.is_practitioner_online,
+                practitionerStartedSession: data.is_session_started,
+              },
             });
           }
         } else {

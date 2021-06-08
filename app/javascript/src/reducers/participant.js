@@ -15,7 +15,7 @@ const participantReducer = (state, { type, payload }) => {
     };
   }
 
-  case "PRACTITIONER_JOINED": {
+  case "PRACTITIONER_IS_ONLINE": {
     return {
       ...state,
       ...payload,
@@ -23,6 +23,20 @@ const participantReducer = (state, { type, payload }) => {
   }
 
   case "SET_PARTICIPANT_NAME": {
+    return {
+      ...state,
+      ...payload,
+    };
+  }
+
+  case "PRACTITIONER_STARTED_SESSION": {
+    return {
+      ...state,
+      ...payload,
+    };
+  }
+
+  case "ASK_FOR_PERMISSION": {
     return {
       ...state,
       ...payload,

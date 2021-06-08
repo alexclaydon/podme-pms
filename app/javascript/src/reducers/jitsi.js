@@ -55,9 +55,10 @@ const jitsiReducer = (state, { type, payload }) => {
   }
 
   case "SESSION_STARTED": {
-    return payload.isSessionStarted
-      ? { ...state, ...payload }
-      : { ...state, waitingParticipantsInfo: [], ...payload };
+    // return payload.isSessionStarted
+    //   ? { ...state, ...payload }
+    //   : { ...state, waitingParticipantsInfo: [], ...payload };
+    return { ...state, ...payload };
   }
 
   default: {
