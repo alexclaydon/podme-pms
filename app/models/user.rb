@@ -35,7 +35,7 @@ class User < ApplicationRecord
   def generate_room_name
     i = 0
     loop do
-      self.room_name = full_name.gsub(/ /, "-") + get_suffix(i)
+      self.room_name = full_name.downcase.gsub(/ /, "-") + get_suffix(i)
       i += 1
       break room_name unless User.where(room_name: self.room_name).exists?
     end
