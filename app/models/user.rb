@@ -33,10 +33,13 @@ class User < ApplicationRecord
   end
 
   def generate_room_name
+    i = 0
     loop do
-      self.room_name = SecureRandom.uuid
+      self.room_name = full_name.gsub(/ /, "-") + get_suffix(i)
+      i += 1
       break room_name unless User.where(room_name: self.room_name).exists?
     end
+    self.room_name.downcase!
   end
 
   private
@@ -56,5 +59,9 @@ class User < ApplicationRecord
         token = Devise.friendly_token
         break token unless User.where(authentication_token: token).first
       end
+    end
+
+    def get_suffix(i)
+      i > 0 ? "-#{i}" : ""
     end
 end

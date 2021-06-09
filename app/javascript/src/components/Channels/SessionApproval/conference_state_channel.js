@@ -3,11 +3,13 @@ import consumer from "../consumer";
 export const conferenceStateSubscription = ({
   practitionerRoomName,
   participantDispatch,
+  participantId,
 }) => {
   const subscription = consumer.subscriptions.create(
     {
       channel: "ConferenceStateChannel",
       room_id: practitionerRoomName,
+      participant_id: participantId,
     },
     {
       connected() {},

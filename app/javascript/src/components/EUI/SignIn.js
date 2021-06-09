@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Input, Button } from "@bigbinary/neetoui";
 import { isMobile } from "react-device-detect";
 import Pattern from "images/eui/pattern.svg";
@@ -9,6 +9,13 @@ const SignIn = ({ setCurrentState }) => {
   const [name, setName] = useState("");
   const participantDispatch = useParticipantDispatch();
 
+  useEffect(() => {
+    const name = localStorage.getItem("pmsGuestName");
+    if (name) {
+      setName(name);
+    }
+  }, []);
+
   const handleSignIn = e => {
     e.preventDefault();
     if (name) {
@@ -16,6 +23,7 @@ const SignIn = ({ setCurrentState }) => {
         type: "SET_PARTICIPANT_NAME",
         payload: { participantName: name, timestamp: new Date() },
       });
+      localStorage.setItem("pmsGuestName", name);
       setCurrentState(EUI_STATES.WAITING.label);
     }
   };

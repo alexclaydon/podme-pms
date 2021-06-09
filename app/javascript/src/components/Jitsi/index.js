@@ -1,3 +1,5 @@
+import { Toastr } from "@bigbinary/neetoui";
+
 export const jitsiInit = ({ jitsiToken, roomName, jitsiDispatch }) => {
   const domain = "8x8.vc";
 
@@ -46,6 +48,7 @@ export const handleWaitingParticipantJoined = (participant, jitsiDispatch) => {
       ...participant,
     },
   });
+  Toastr.success(`${participant.participant_name} has joined waiting room`);
 };
 
 export const handleWaitingParticipantLeft = (participant, jitsiDispatch) => {
@@ -59,7 +62,7 @@ export const handleWaitingParticipantLeft = (participant, jitsiDispatch) => {
 
 const notifications = [
   "connection.CONNFAIL", // shown when the connection fails,
-  "dialog.cameraNotSendingData", // shown when there's no feed from user's camera
+  // "dialog.cameraNotSendingData", // shown when there's no feed from user's camera
   // "dialog.kickTitle", // shown when user has been kicked
   "dialog.liveStreaming", // livestreaming notifications (pending, on, off, limits)
   "dialog.lockTitle", // shown when setting conference password fails

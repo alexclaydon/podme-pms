@@ -6,5 +6,6 @@ class ConferenceStateChannel < ApplicationCable::Channel
   end
 
   def unsubscribed
+    ActionCable.server.broadcast "session_approval_channel_#{params[:room_id]}", { participant_room: params[:participant_id], participant_left: true }
   end
 end

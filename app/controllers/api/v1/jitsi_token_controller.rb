@@ -28,7 +28,7 @@ class Api::V1::JitsiTokenController < Api::V1::BaseController
     end
 
     def ask_permission_to_join_call
-      ActionCable.server.broadcast("session_approval_channel_#{token_params[:room_name]}", { participant_name: token_params[:name], participant_room: token_params[:id], timestamp: token_params[:timestamp] })
+      ActionCable.server.broadcast("session_approval_channel_#{token_params[:room_name]}", { participant_name: token_params[:name], participant_room: token_params[:id], timestamp: token_params[:timestamp], type: "ADMIT_REQUEST" })
     end
 
     def room_name

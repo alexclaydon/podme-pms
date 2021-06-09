@@ -20,8 +20,14 @@ export const practitionerSubscription = ({ roomName, jitsiDispatch }) => {
       },
       received(data) {
         if (!data.error) {
-          if (data.participant_room) {
+          if (data.type === "ADMIT_REQUEST") {
             handleWaitingParticipantJoined(data, jitsiDispatch);
+          }
+          if (data.participant_left) {
+            handleWaitingParticipantLeft(
+              { participant_room: data.participant_room },
+              jitsiDispatch
+            );
           }
         } else {
           logger.log(data, "data from error");

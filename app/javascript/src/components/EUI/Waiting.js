@@ -38,6 +38,7 @@ const Waiting = ({ setCurrentState }) => {
     conferenceStateSubscription({
       practitionerRoomName: room,
       participantDispatch,
+      participantId,
     });
     getToken(participantId);
   }, []);
