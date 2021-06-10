@@ -10,6 +10,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
 
   const authDispatch = useAuthDispatch();
   const userDispatch = useUserDispatch();
@@ -20,7 +21,9 @@ const Login = () => {
       setLoading(true);
       const {
         data: { auth_token, user, is_admin },
-      } = await authenticationApi.login({ user: { email, password } });
+      } = await authenticationApi.login({
+        user: { email, password, remember_me: rememberMe },
+      });
       authDispatch({ type: "LOGIN", payload: { auth_token, email, is_admin } });
       userDispatch({ type: "SET_USER", payload: { user } });
       setAuthHeaders();
@@ -64,7 +67,12 @@ const Login = () => {
             onChange={e => setPassword(e.target.value)}
           />
           <div className="flex flex-row items-center justify-between">
-            <Checkbox name="remember" label="Remember me" />
+            <Checkbox
+              name="remember"
+              label="Remember me"
+              checked={rememberMe}
+              onChange={e => setRememberMe(e.target.checked)}
+            />
             <Button
               label="Forgot password?"
               style="link"

@@ -1,6 +1,11 @@
 import { Toastr } from "@bigbinary/neetoui";
 
-export const jitsiInit = ({ jitsiToken, roomName, jitsiDispatch }) => {
+export const jitsiInit = ({
+  jitsiToken,
+  roomName,
+  jitsiDispatch,
+  userRoomLink = "",
+}) => {
   const domain = "8x8.vc";
 
   const options = {
@@ -12,7 +17,7 @@ export const jitsiInit = ({ jitsiToken, roomName, jitsiDispatch }) => {
       startWithAudioMuted: false,
       startWithVideoMuted: false,
       disableInviteFunctions: false,
-      // brandingRoomAlias: "roomName",
+      brandingRoomAlias: userRoomLink,
       notifications,
     },
     onload: () => handleJitsiIframeLoad(jitsiDispatch),

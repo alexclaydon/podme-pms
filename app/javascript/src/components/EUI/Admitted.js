@@ -4,6 +4,7 @@ import { EUI_STATES, practitionerLeftText } from "./constants";
 import { jitsiInit } from "components/Jitsi";
 import { useJitsiDispatch, useJitsiState } from "contexts/jitsi";
 import { useParticipantState } from "contexts/participant";
+import { useParams } from "react-router-dom";
 let api;
 let closePageAfter60s;
 const Admitted = ({ setCurrentState }) => {
@@ -14,10 +15,16 @@ const Admitted = ({ setCurrentState }) => {
     practitionerLeft,
     practitionerStartedSession,
   } = useParticipantState();
+  const { room } = useParams();
 
   useEffect(() => {
     if (jitsiToken) {
-      api = jitsiInit({ jitsiToken, roomName, jitsiDispatch });
+      api = jitsiInit({
+        jitsiToken,
+        roomName,
+        jitsiDispatch,
+        userRoomLink: room,
+      });
       api.addEventListener("videoConferenceLeft", () =>
         setCurrentState(EUI_STATES.THANKYOU.label)
       );

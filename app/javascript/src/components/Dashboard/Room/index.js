@@ -49,7 +49,12 @@ let Room = props => {
         type: "LOAD_IFRAME",
         payload: { isIframeLoading: true },
       });
-      api = jitsiInit({ jitsiToken, roomName, jitsiDispatch });
+      api = jitsiInit({
+        jitsiToken,
+        roomName,
+        jitsiDispatch,
+        userRoomLink: user.room_name,
+      });
       api.addEventListener("participantJoined", participant =>
         handleParticipantJoined(participant, jitsiDispatch)
       );
