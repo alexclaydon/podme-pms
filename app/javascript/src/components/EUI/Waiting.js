@@ -112,9 +112,7 @@ const Waiting = ({ setCurrentState }) => {
               <p className={waitingTextClass}>
                 {isPractitionerOnlineAndStartedSession
                   ? "Practitioner started the session. Asking for Permission."
-                  : `When your practitioner becomes available, you will automatically
-                be placed into conference. In the meantime, please see below
-                content specifically provided for your consideration.`}
+                  : "When your practitioner becomes available, the session will automatically commence."}
               </p>
             </div>
           </div>
