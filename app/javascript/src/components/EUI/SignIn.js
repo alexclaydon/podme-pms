@@ -30,7 +30,7 @@ const SignIn = ({ setCurrentState }) => {
   };
 
   return (
-    <div className="w-full h-full py-12 sm:pt-12 fadeIn">
+    <div className="w-full h-full py-12 sm:pb-0 fadeIn">
       {!isMobile && <img src={Pattern} className="fixed z-0 right-8 top-16" />}
 
       <div className="z-10 flex flex-col h-full max-w-4xl px-6 m-auto">

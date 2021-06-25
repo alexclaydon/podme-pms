@@ -91,34 +91,32 @@ const Waiting = ({ setCurrentState }) => {
   });
 
   return (
-    <div className="container z-10 px-6 m-auto fadeIn">
-      <div className="py-8 sm:py-10">
-        <div className="max-w-5xl mx-auto">
-          <div className="grid items-center grid-cols-12 sm:gap-8">
-            {!isMobileOnly && (
-              <div className="col-span-4">
-                <img src={WelcomeImage} className="w-full h-auto" />
-              </div>
-            )}
-            <div className="col-span-12 sm:col-span-8">
-              <div className="flex flex-row items-center justify-center mb-6 space-x-6 sm:justify-start">
-                <h1 className="text-2xl font-medium text-gray-900 sm:text-4xl">
-                  Welcome to
-                </h1>
-                <img src={Logo} className="w-40 h-auto" />
-              </div>
-              <h2 className="mb-2 text-lg font-bold text-center text-gray-800 sm:text-xl xl:text-2xl sm:text-left">
-                You are currently in the waiting room.
-              </h2>
-              {isMobileOnly && (
-                <img src={WelcomeImage} className="w-4/5 h-auto mx-auto" />
-              )}
-              <p className={waitingTextClass}>
-                {isPractitionerOnlineAndStartedSession
-                  ? "Practitioner started the session. Asking for Permission."
-                  : "When your practitioner becomes available, the session will automatically commence."}
-              </p>
+    <div className="w-full h-full px-6 py-12 sm:pb-0 fadeIn">
+      <div className="flex flex-col items-center justify-center h-full max-w-5xl m-auto">
+        <div className="flex flex-row items-center justify-center space-x-6 sm:justify-start">
+          <h1 className="text-2xl font-medium text-gray-900 sm:text-4xl">
+            Welcome to
+          </h1>
+          <img src={Logo} className="w-40 h-auto" />
+        </div>
+        <div className="grid items-center self-center grid-cols-12 m-auto sm:gap-8">
+          {!isMobileOnly && (
+            <div className="col-span-4">
+              <img src={WelcomeImage} className="w-full h-auto" />
             </div>
+          )}
+          <div className="col-span-12 sm:col-span-8">
+            <h2 className="mb-2 text-lg font-bold text-center text-gray-800 sm:text-xl xl:text-2xl sm:text-left">
+              You are currently in the waiting room.
+            </h2>
+            {isMobileOnly && (
+              <img src={WelcomeImage} className="w-4/5 h-auto mx-auto" />
+            )}
+            <p className={waitingTextClass}>
+              {isPractitionerOnlineAndStartedSession
+                ? "Practitioner started the session. Asking for Permission."
+                : "When your practitioner becomes available, the session will automatically commence."}
+            </p>
           </div>
         </div>
       </div>
