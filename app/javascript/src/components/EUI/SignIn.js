@@ -4,6 +4,7 @@ import { isMobile } from "react-device-detect";
 import Pattern from "images/eui/pattern.svg";
 import { EUI_STATES } from "./constants";
 import { useParticipantDispatch } from "contexts/participant";
+import Logo from "images/eui/logo.png";
 
 const SignIn = ({ setCurrentState }) => {
   const [name, setName] = useState("");
@@ -29,10 +30,18 @@ const SignIn = ({ setCurrentState }) => {
   };
 
   return (
-    <div className="w-full fadeIn">
+    <div className="w-full h-full py-12 sm:pt-12 fadeIn">
       {!isMobile && <img src={Pattern} className="fixed z-0 right-8 top-16" />}
-      <div className="z-10 max-w-4xl px-6 m-auto">
-        <h1 className="mb-6 text-4xl font-extrabold text-center text-gray-900 sm:text-5xl">
+
+      <div className="z-10 flex flex-col h-full max-w-4xl px-6 m-auto">
+        <div className="flex flex-row items-center justify-center space-x-6">
+          <h1 className="text-2xl font-medium text-center text-gray-900 sm:text-4xl">
+            Welcome to
+          </h1>
+          <img src={Logo} className="w-40 h-auto" />
+        </div>
+
+        {/* <h1 className="mb-6 text-4xl font-extrabold text-center text-gray-900 sm:text-5xl">
           Oliver’s therapy center
         </h1>
         <p className="text-base leading-relaxed text-center text-gray-600 sm:text-lg">
@@ -41,8 +50,8 @@ const SignIn = ({ setCurrentState }) => {
           available, you will automatically be placed into conference. In the
           meantime, please see below content specifically provided for your
           consideration by Oliver Smith.
-        </p>
-        <div className="max-w-md mx-auto mt-12">
+        </p> */}
+        <div className="self-center w-full max-w-lg m-auto">
           <form onSubmit={handleSignIn}>
             <Input
               label="Choose the name you wish to use for this session"

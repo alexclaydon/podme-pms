@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import WelcomeImage from "images/eui/waiting.svg";
+import Logo from "images/eui/logo.png";
 import { isMobileOnly } from "react-device-detect";
 import { EUI_STATES } from "./constants";
 import {
@@ -91,7 +92,7 @@ const Waiting = ({ setCurrentState }) => {
 
   return (
     <div className="container z-10 px-6 m-auto fadeIn">
-      <div className="py-8 border-b border-gray-200 sm:py-10">
+      <div className="py-8 sm:py-10">
         <div className="max-w-5xl mx-auto">
           <div className="grid items-center grid-cols-12 sm:gap-8">
             {!isMobileOnly && (
@@ -100,9 +101,12 @@ const Waiting = ({ setCurrentState }) => {
               </div>
             )}
             <div className="col-span-12 sm:col-span-8">
-              <h1 className="mb-2 text-2xl font-extrabold text-center text-gray-900 sm:mb-4 sm:text-3xl xl:text-4xl sm:text-left">
-                Oliver’s therapy center
-              </h1>
+              <div className="flex flex-row items-center justify-center mb-6 space-x-6 sm:justify-start">
+                <h1 className="text-2xl font-medium text-gray-900 sm:text-4xl">
+                  Welcome to
+                </h1>
+                <img src={Logo} className="w-40 h-auto" />
+              </div>
               <h2 className="mb-2 text-lg font-bold text-center text-gray-800 sm:text-xl xl:text-2xl sm:text-left">
                 You are currently in the waiting room.
               </h2>
@@ -119,7 +123,7 @@ const Waiting = ({ setCurrentState }) => {
         </div>
       </div>
       {/* Content */}
-      <div className="max-w-4xl py-8 mx-auto sm:py-10">
+      {/* <div className="max-w-4xl py-8 mx-auto sm:py-10">
         <p className="text-base leading-loose text-gray-700 xl:text-lg">
           Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil
           impedit quo minus id quod maxime placeat. Ut enim ad minima veniam,
@@ -144,7 +148,7 @@ const Waiting = ({ setCurrentState }) => {
           Architecto beatae vitae dicta sunt explicabo. Animi, id est laborum et
           dolorum fuga.
         </p>
-      </div>
+      </div> */}
     </div>
   );
 };
