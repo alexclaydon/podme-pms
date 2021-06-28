@@ -4,7 +4,7 @@ import { isMobile } from "react-device-detect";
 import Pattern from "images/eui/pattern.svg";
 import { EUI_STATES } from "./constants";
 import { useParticipantDispatch } from "contexts/participant";
-import Logo from "images/eui/logo.png";
+import LogoSVG from "components/Common/LogoSVG";
 
 const SignIn = ({ setCurrentState }) => {
   const [name, setName] = useState("");
@@ -38,7 +38,7 @@ const SignIn = ({ setCurrentState }) => {
           <h1 className="text-2xl font-medium text-center text-gray-900 sm:text-4xl">
             Welcome to
           </h1>
-          <img src={Logo} className="w-40 h-auto" />
+          <LogoSVG />
         </div>
 
         {/* <h1 className="mb-6 text-4xl font-extrabold text-center text-gray-900 sm:text-5xl">

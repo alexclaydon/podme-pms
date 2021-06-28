@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import WelcomeImage from "images/eui/waiting.svg";
-import Logo from "images/eui/logo.png";
 import { isMobileOnly } from "react-device-detect";
 import { EUI_STATES } from "./constants";
 import {
@@ -14,6 +13,8 @@ import { uuid } from "components/Dashboard/Room/helpers";
 import jitsiTokenApi from "apis/jitsiToken";
 import { participantSubscription } from "components/Channels/SessionApproval/session_approval_channel";
 import classNames from "classnames";
+import LogoSVG from "components/Common/LogoSVG";
+
 const randomId = uuid();
 
 const Waiting = ({ setCurrentState }) => {
@@ -97,7 +98,7 @@ const Waiting = ({ setCurrentState }) => {
           <h1 className="text-2xl font-medium text-gray-900 sm:text-4xl">
             Welcome to
           </h1>
-          <img src={Logo} className="w-40 h-auto" />
+          <LogoSVG />
         </div>
         <div className="grid items-center self-center grid-cols-12 m-auto sm:gap-8">
           {!isMobileOnly && (
