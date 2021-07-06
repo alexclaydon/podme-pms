@@ -27,16 +27,27 @@ const TABS = [
     label: "Waiting Room",
     value: "Waiting Room",
     component: WaitingRoom,
+    notFunctional: true,
   },
   {
     label: "Post-call Feedback",
     value: "Post-call Feedback",
     component: PostCallFeedback,
+    notFunctional: true,
   },
 ];
 
 const Settings = () => {
   const [currentTab, setCurrentTab] = useState(TABS[0].value);
+
+  const tabStyles = {
+    option: (provided, state) => {
+      return {
+        ...provided,
+        opacity: state.data.notFunctional ? "0.5" : "1",
+      };
+    },
+  };
 
   return (
     <>
@@ -57,17 +68,19 @@ const Settings = () => {
                 value={TABS.filter(tab => tab.value === currentTab)}
                 onChange={selected => setCurrentTab(selected.value)}
                 isSearchable={false}
+                styles={tabStyles}
               />
             </div>
           )}
           <div className="w-full xl:w-2/3">
             {!isMobileOnly && (
               <Tab className="border-b border-gray-200">
-                {TABS.map(({ label, value }, index) => (
+                {TABS.map(({ label, value, notFunctional }, index) => (
                   <Tab.Item
                     key={index}
                     active={currentTab === value}
                     onClick={() => setCurrentTab(value)}
+                    className={notFunctional && "opacity-50"}
                   >
                     {label}
                   </Tab.Item>
