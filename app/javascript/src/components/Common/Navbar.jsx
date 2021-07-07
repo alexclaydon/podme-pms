@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { Avatar, Dropdown, Toastr, Button } from "@bigbinary/neetoui";
+import { Dropdown, Toastr, Button } from "@bigbinary/neetoui";
 import { withRouter } from "react-router-dom";
 import { isMobileOnly, isDesktop } from "react-device-detect";
 import { useAuthDispatch } from "contexts/auth";
@@ -8,6 +8,7 @@ import authenticationApi from "apis/authentication";
 import { resetAuthTokens } from "apis/axios";
 import classnames from "classnames";
 import { useUserState } from "contexts/user";
+import LogoSVG from "components/Common/LogoSVG";
 
 const Tabs = () => {
   const navlinkClasses =
@@ -86,7 +87,7 @@ const NavBar = () => {
               }
             )}
           >
-            <svg
+            {/* <svg
               width="32"
               height="32"
               viewBox="0 0 64 64"
@@ -101,7 +102,8 @@ const NavBar = () => {
                 d="M34.828 31.9733C34.578 31.7234 34.2389 31.583 33.8853 31.583C33.5318 31.583 33.1927 31.7234 32.9427 31.9733L32 32.9147C31.754 33.1694 31.4597 33.3725 31.1344 33.5123C30.8091 33.652 30.4591 33.7256 30.1051 33.7287C29.751 33.7318 29.3998 33.6643 29.0721 33.5302C28.7444 33.3961 28.4466 33.1981 28.1963 32.9477C27.9459 32.6973 27.7479 32.3996 27.6138 32.0719C27.4797 31.7442 27.4122 31.393 27.4153 31.0389C27.4184 30.6849 27.492 30.3349 27.6317 30.0096C27.7715 29.6842 27.9746 29.39 28.2293 29.144L35.736 21.6347C37.5132 21.2304 39.3727 21.3968 41.0499 22.1101C42.7272 22.8234 44.1368 24.0473 45.0785 25.6079C46.0202 27.1684 46.4459 28.9861 46.2951 30.8024C46.1443 32.6188 45.4247 34.3414 44.2387 35.7253L41.428 38.572L34.828 31.972V31.9733ZM20.2147 23.9573C21.5943 22.5778 23.3989 21.704 25.3367 21.477C27.2745 21.2501 29.2322 21.6833 30.8933 22.7067L26.3427 27.2587C25.3571 28.2423 24.7952 29.5724 24.7772 30.9648C24.7592 32.3571 25.2865 33.7013 26.2464 34.71C27.2062 35.7188 28.5225 36.3122 29.9141 36.3634C31.3056 36.4146 32.6619 35.9195 33.6933 34.984L33.8853 34.8013L39.5427 40.4573L33.8853 46.1147C33.3852 46.6146 32.7071 46.8954 32 46.8954C31.2929 46.8954 30.6147 46.6146 30.1147 46.1147L20.2133 36.2133C18.5882 34.588 17.6752 32.3838 17.6752 30.0853C17.6752 27.7869 18.5882 25.5826 20.2133 23.9573H20.2147Z"
                 fill="#F9FAFB"
               />
-            </svg>
+            </svg> */}
+            <LogoSVG height="40" />
           </div>
           {!isMobileOnly && (
             <div className="flex flex-row items-center justify-center col-span-6 space-x-2">
@@ -117,7 +119,14 @@ const NavBar = () => {
                       {fullName}
                     </p>
                   )}
-                  <Avatar size={32} contact={{ fullName }} />
+                  {/* <Avatar size={32} contact={{ fullName }} /> */}
+                  {isMobileOnly && (
+                    <Button
+                      style="icon"
+                      icon="ri-more-2-fill"
+                      className="text-gray-200 hover:text-white"
+                    />
+                  )}
                   {!isMobileOnly && (
                     <i className="ml-1 text-gray-400 ri-arrow-down-s-line"></i>
                   )}

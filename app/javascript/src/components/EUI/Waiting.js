@@ -98,7 +98,7 @@ const Waiting = ({ setCurrentState }) => {
           <h1 className="text-2xl font-medium text-gray-900 sm:text-4xl">
             Welcome to
           </h1>
-          <LogoSVG />
+          <LogoSVG width="166" height="88" />
         </div>
         <div className="grid items-center self-center grid-cols-12 m-auto sm:gap-8">
           {!isMobileOnly && (

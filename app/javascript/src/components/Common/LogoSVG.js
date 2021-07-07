@@ -3,8 +3,6 @@ import * as React from "react";
 function LogoSVG(props) {
   return (
     <svg
-      width="166"
-      height="88"
       viewBox="0 0 1142.667 629.667"
       xmlnsXlink="http://www.w3.org/1999/xlink"
       xmlns="http://www.w3.org/2000/svg"
