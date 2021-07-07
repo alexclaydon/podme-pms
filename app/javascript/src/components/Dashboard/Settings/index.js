@@ -27,13 +27,13 @@ const TABS = [
     label: "Waiting Room",
     value: "Waiting Room",
     component: WaitingRoom,
-    notFunctional: true,
+    disabled: true,
   },
   {
     label: "Post-call Feedback",
     value: "Post-call Feedback",
     component: PostCallFeedback,
-    notFunctional: true,
+    disabled: true,
   },
 ];
 
@@ -44,7 +44,7 @@ const Settings = () => {
     option: (provided, state) => {
       return {
         ...provided,
-        opacity: state.data.notFunctional ? "0.5" : "1",
+        opacity: state.data.disabled ? "0.5" : "1",
       };
     },
   };
@@ -75,12 +75,12 @@ const Settings = () => {
           <div className="w-full xl:w-2/3">
             {!isMobileOnly && (
               <Tab className="border-b border-gray-200">
-                {TABS.map(({ label, value, notFunctional }, index) => (
+                {TABS.map(({ label, value, disabled }, index) => (
                   <Tab.Item
                     key={index}
                     active={currentTab === value}
                     onClick={() => setCurrentTab(value)}
-                    className={notFunctional && "opacity-50"}
+                    className={disabled && "opacity-50"}
                   >
                     {label}
                   </Tab.Item>
