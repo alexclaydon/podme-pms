@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_08_113222) do
+ActiveRecord::Schema.define(version: 2021_07_07_105129) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -59,8 +59,10 @@ ActiveRecord::Schema.define(version: 2021_06_08_113222) do
     t.string "room_name", null: false
     t.boolean "is_session_live", default: false
     t.boolean "is_active", default: false
+    t.string "office_name"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["room_name"], name: "index_users_on_room_name", unique: true
   end
 
 end

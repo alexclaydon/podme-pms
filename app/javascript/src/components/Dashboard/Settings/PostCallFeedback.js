@@ -1,11 +1,13 @@
-import React, { useState } from "react";
-import { Switch, Input, Collapse, Button } from "@bigbinary/neetoui";
+import React from "react";
+// import { Switch, Input, Collapse, Button } from "@bigbinary/neetoui";
+import { NotFunctionalText } from "components/Common/NotFunctionalText";
 
 const PostCallFeedback = () => {
-  const [feedbackEnabled, setFeedbackEnabled] = useState(false);
+  // const [feedbackEnabled, setFeedbackEnabled] = useState(false);
   return (
     <div className="w-full">
-      <div className="relative flex flex-row items-center justify-start">
+      <NotFunctionalText />
+      {/* <div className="relative flex flex-row items-center justify-start">
         <div className="flex-grow">
           <h4 className="pr-12 mb-1 text-base font-medium text-gray-800 sm:pr-0">
             Enable post-call feedback with Typeform
@@ -33,7 +35,7 @@ const PostCallFeedback = () => {
       <div className="flex flex-row items-center justify-start py-5 mt-8 space-x-3 border-t border-gray-200">
         <Button label="Save changes" icon="ri-checkbox-circle-fill" />
         <Button style="secondary" label="Cancel" />
-      </div>
+      </div> */}
     </div>
   );
 };

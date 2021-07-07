@@ -38,7 +38,7 @@ const SignIn = ({ setCurrentState }) => {
           <h1 className="text-2xl font-medium text-center text-gray-900 sm:text-4xl">
             Welcome to
           </h1>
-          <LogoSVG />
+          <LogoSVG width="166" height="88" />
         </div>
 
         {/* <h1 className="mb-6 text-4xl font-extrabold text-center text-gray-900 sm:text-5xl">

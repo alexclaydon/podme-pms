@@ -1,10 +1,12 @@
 import React from "react";
-import { Button, Radio, Textarea } from "@bigbinary/neetoui";
+// import { Button, Radio, Textarea } from "@bigbinary/neetoui";
+import { NotFunctionalText } from "components/Common/NotFunctionalText";
 
 const WaitingRoom = () => {
   return (
     <div className="w-full">
-      <div className="mb-4">
+      <NotFunctionalText />
+      {/* <div className="mb-4">
         <h4 className="text-base font-medium text-gray-800">
           Waiting room text
         </h4>
@@ -34,7 +36,7 @@ const WaitingRoom = () => {
       <div className="flex flex-row items-center justify-start py-5 mt-8 space-x-3 border-t border-gray-200">
         <Button label="Save changes" icon="ri-checkbox-circle-fill" />
         <Button style="secondary" label="Cancel" />
-      </div>
+      </div> */}
     </div>
   );
 };
